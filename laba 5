@@ -1,0 +1,1486 @@
+1.
+
+#include <iostream>
+
+#include <cstdlib>
+
+#include <ctime>
+
+#include <iomanip>
+ 
+int main()
+
+{
+    
+    std::srand(std::time(NULL));
+    
+    const int rows = 5, cols = 4;
+    
+    int** arr = new int* [rows];
+    
+    for(int i = 0; i < rows; ++i)
+    
+    {
+        
+        arr[i] = new int [cols];
+        
+        for(int j = 0; j < cols; ++j)
+        
+        {
+            
+            arr[i][j] = std::rand() & 1;
+            
+            std::cout << std::setw(4) << arr[i][j];
+            
+        }
+        
+        std::cout << std::endl;
+        
+    }
+    
+    std::cout << std::endl;
+    
+    int* res = new int [cols];
+    
+    for(int j = 0; j < cols; ++j)
+    
+    {
+        
+        res[j] = 0;
+        
+        for(int i = 0; i < rows; ++i)
+        
+            if(arr[i][j])
+            
+            {
+                
+                res[j] = 1;
+                
+                break;
+                
+            }
+            
+        std::cout << std::setw(4) << res[j];
+        
+    }
+    
+    std::cout << std::endl;
+    
+    for(int i = 0; i < rows; ++i)
+    
+        delete[] arr[i];
+        
+    delete[] arr;
+    
+    delete[] res;
+    
+    return 0;
+    
+}
+
+---------------------------------------------------------------------------------------------------
+
+2.
+
+#include <iostream>
+
+#include <cstdlib>
+
+#include <ctime>
+
+#include <iomanip>
+ 
+int main()
+
+{
+    
+    std::srand(std::time(NULL));
+    
+    const int rows = 5, cols = 4;
+    
+    int** arr = new int* [rows];
+    
+    for(int i = 0; i < rows; ++i)
+    
+    {
+        
+        arr[i] = new int [cols];
+        
+        for(int j = 0; j < cols; ++j)
+        
+        {
+            
+            arr[i][j] = std::rand() & 1;
+            
+            std::cout << std::setw(4) << arr[i][j];
+            
+        }
+        
+        std::cout << std::endl;
+        
+    }
+    
+    std::cout << std::endl;
+    
+    int* res = new int [cols];
+    
+    for(int j = 0; j < cols; ++j)
+    
+    {
+        
+        res[j] = 0;
+        
+        for(int i = 0; i < rows; ++i)
+        
+            if(arr[i][j])
+            
+            {
+                
+                res[j] = 1;
+                
+                break;
+                
+            }
+            
+        std::cout << std::setw(4) << res[j];
+        
+    }
+    
+    std::cout << std::endl;
+    
+    for(int i = 0; i < rows; ++i)
+    
+        delete[] arr[i];
+        
+    delete[] arr;
+    
+    delete[] res;
+    
+    return 0;
+    
+}
+
+----------------------------------------------------------------------------------------------------------
+
+3.
+
+#include <iostream>
+
+		#include <locale>
+		
+		
+		#include <time.h>
+		
+		using namespace std;
+			
+		void createMassivB( bool* Arr, int j, bool flag)
+		
+		{
+		    
+		    Arr[j] = flag;
+		    
+		}
+			
+		int main()
+		
+		{
+		    
+		    setlocale(LC_ALL,"Russian");
+		    
+		    int n(0),m(0);
+		    
+		    cout<<"Введите размеррность матрицы: ";cin>> n >> m;
+		    
+		    cout<<endl;
+		
+		    int** Mass = new int* [n];
+		    
+		    for(int i=0; i<n; i++)
+		    
+		        Mass[i] = new int [m];
+		
+		    srand((int)time(0));
+		    
+		    for(int i=0; i<n; i++)
+		    
+		        for(int j=0; j<m; j++)
+		        
+		            Mass[i][j] = rand()%5;
+		
+		    cout << "Исходная матрица: " << endl << endl;
+		    
+		    for(int i(0); i<n; i++)
+		    
+		    {
+		        
+		        for(int j=0; j<m; j++)
+		        
+		            if(j==m-1)
+		            
+		                cout << Mass[i][j] << endl;
+		                
+		            else 
+		            
+		                cout << Mass[i][j];
+		                
+		    }
+		
+			
+		    bool* MassB = new bool [n];
+		    
+		    for(int j=0; j<m; j++)
+		    
+		            MassB[j] = false; 
+			
+		    int k;
+		    
+		    int flagNechet = m%2; 
+		    
+		    for(int i=0; i<n; i++)
+		    
+		    {
+		        
+		        k=true;
+		
+		        for(int j=0; j<m/2; j++)
+		        
+		        {
+		            
+		            if (Mass[i][j]==Mass[i][m-j-1])
+		            
+		                 k = true;
+		                 
+		            else
+		            
+		            {
+		                
+		                k = false;
+		                
+		                break;
+		                
+		            }
+		            
+		        }
+		        
+		        MassB[i]=k;
+		        
+		    }
+		
+		    cout<<endl;
+		    
+		    for(int j=0; j<n; j++)
+		    
+		    {
+		        
+		        if(j==n-1)
+		        
+		            cout << MassB[j] << endl;
+		            
+		        else 
+		        
+		            cout << MassB[j];
+		    }
+		
+		    return 0;
+		    
+		}
+
+--------------------------------------------------------------------------------------------------------------
+
+4.
+
+#include <iostream>
+
+using namespace std;
+
+const int n=4,m=4;
+
+int main()
+
+{
+    
+    int A[n][m];
+    
+    int k=0,sum=0;
+    
+    for(int i=0;i<n;i++)
+    
+    {
+    
+        for(int j=0;j<m;j++)
+        
+        {
+        
+            cout<<"Vvedite ["<<i<<"]["<<j<<"] element: ";
+            
+            cin>>A[i][j];
+            
+        }
+        
+    }
+    
+    for(int i=0;i<n;i++)
+    
+    {
+    
+        for(int j=0;j<m;j++)
+        
+        {
+        
+            cout<<A[i][j]<<" ";
+            
+        }
+        
+        cout<<endl;
+        
+    }
+    
+    for(int i=0;i<m;i++)
+    
+    {
+    
+        for(int j=0;j<n;j++)
+        
+        {
+        
+            sum=sum+A[j][i];
+            
+        }
+        
+        for(int a=0;a<n;a++)
+        
+        {
+        
+            if(A[a][i]>sum-A[a][i]) k++;
+            
+        }
+        
+        sum=0;
+        
+    }
+    
+    cout<<"Otvet: "<<k<<endl;
+    
+    return 0;
+    
+}
+
+-------------------------------------------------------------------------------------------
+
+5.
+
+#include <iostream>
+
+#include <time.h>
+
+#include <iomanip>
+
+#include <stdlib.h>
+
+using namespace std;
+
+int main()
+
+{
+
+double **a;
+
+int n,m,i,j,l,r,res;
+
+cout<<"Vvedite N i M\n";
+
+cin>>n>>m;
+
+a=new double*[n];
+
+for(i=0;i<n;i++)
+
+a[i]=new double[m];
+
+cout<<"\nVvedite massiv:\n";
+
+for(i=0;i<n;i++)
+
+for(j=0;j<m;j++)
+
+{
+
+cout<<"Vvedite a["<<i<<"]["<<j<<"]:";
+
+cin>>*(*(a+i)+j);
+
+}
+
+cout<<"\nMassiv:\n";
+
+for(i=0;i<n;i++)
+
+{
+
+for(j=0;j<m;j++)
+
+cout<<setw(9)<<a[i][j];
+
+cout<<endl;
+
+}
+
+res=0;
+
+for(i=0;i<n;i++)
+
+for(j=1;j<m-1;j++)
+
+{
+
+l=j-1;
+
+r=j+1;
+
+while((l>=0)&&(a[i][l]<a[i][j]))l--;
+
+while((r<m)&&(a[i][r]>a[i][j]))r++;
+
+if(r-l-1==m)
+
+res++;
+
+}
+
+cout<<"Result= "<<res;
+
+return 0;
+
+}
+
+--------------------------------------------------------------------------------------
+
+6.
+
+#include <iostream>
+
+using namespace std;
+
+int	main ()
+
+{
+
+int i,j,k,n,m;
+
+cout<<"Vvedite razmer matr.(nxm): ";cin>>n>>m;//матрица квадратная, так что запрашиваем один параметр
+
+char **matrix;//создаем двумерный массив
+
+matrix=new char*[n];
+
+for(i=0;i<n;i++)
+
+matrix[i]=new char[n];
+
+for(i=0;i<n;i++)// заполняем двумерный массив построчно
+
+{
+
+cout<<"Vvedite stroku "<<i+1<<", "<<n<<" simvolov: ";
+
+for(j=0;j<m;j++) cin>>matrix[i][j];
+
+}
+
+char *t=new char[n*m];
+
+int cnt=0;
+
+bool bp;
+
+for(i=0;i<n;i++)
+
+for(j=0;j<m;j++)
+
+{
+
+bp=true;
+
+for(k=0;k<cnt;k++)
+
+if(matrix[i][j]==t[k]){bp=false;break;}
+
+if(bp){t[cnt]=matrix[i][j];cnt++;}
+
+}
+
+cout<<"Razlichnye simvoly: "<<endl;
+
+for (k=0;k<cnt;k++)cout<<t[k]<<' ';
+
+cout<<endl<<"Kolichestvo: "<<cnt<<endl;
+
+delete[] t;
+
+for(i=0;i<n;i++)//освобождение памяти
+
+delete[] matrix[i];
+
+delete matrix;
+
+return 0;
+
+}
+
+---------------------------------------------------------------------------------------------------
+
+7.
+
+#include "iostream"
+
+#include "iomanip"
+
+#include "math.h"
+
+using namespace std;
+
+int main()
+
+{
+    
+    double **a,b;
+    
+    int i,j,n,m,k;
+    
+    cout<<"vvedite razmer: n,m"<<endl;
+    
+    cin>>n>>m;
+    
+    a=new double*[n];
+    
+    for(i=0;i<n;i++)
+    
+        a[i]=new double[m];
+        
+    for(i=0;i<n;i++)
+    
+        for(j=0;j<m;j++)
+        
+        {
+            
+        cout<<"vvedite a["<<i<<"]["<<j<<"]:";
+        
+        cin>>a[i][j];
+        
+}
+        cout<<"MASSIV:"<<endl;
+        
+        for(i=0;i<n;i++)
+        
+        {
+            
+            for(j=0;j<m;j++)
+            
+                cout<<setw(10)<<a[i][j]<< " ";
+                
+            cout<<endl;
+            
+        }
+        
+for (i=0; i<n-1; i++){
+    
+    for (k=0; k<n-1; k++){
+        
+        if (a[k][0]>a[k+1][0]){
+            
+            for (j=0; j<m; j++){
+                
+            b=a[k][j];
+            
+            a[k][j]=a[k+1][j];
+            
+            a[k+1][j]=b;
+            
+            }
+            
+        }
+        
+    }
+    
+}
+
+cout<<"Result:"<<endl;
+
+for(i=0;i<n;i++)
+
+{
+    
+    for(j=0;j<m;j++)
+    
+        cout<<setw(10)<<a[i][j]<<" ";
+        
+    cout<<endl;
+    
+}
+
+for(i=0;i<n;i++)
+
+delete [] a[i];
+
+delete []a;
+
+a=NULL;
+
+    return 0;
+    
+}
+
+-----------------------------------------------------------------------------------------------------
+
+8.
+
+#include <iostream>
+ 
+using namespace std;
+
+int main()
+
+{
+
+    int **mas1, *mas2;
+    
+    size_t n, m;
+ 
+    cout << "vvedite N:" << endl;
+    
+    cin >> n;
+    
+    cout << "vvedite M:" << endl;
+    
+    cin >> m;
+ 
+    mas1 = new int*[n];
+    
+    for (size_t i = 0; i < n; ++i)
+    
+        mas1[i] = new int[m];
+ 
+    mas2 = new int[n]();
+ 
+    for (size_t i = 0; i < n; ++i) {
+    
+        cout << "Vvedite stroku[" << i + 1 << "] " << endl;
+        
+        for (size_t j = 0; j < m; ++j)
+        
+            cin >> mas1[i][j];
+            
+    }
+ 
+    cout << endl;
+    
+    for (size_t i = 0; i < n; ++i)
+    
+    {
+    
+        for (size_t j = 0; j < m; ++j)
+        
+            cout << mas1[i][j] << " ";
+            
+        cout << endl;
+        
+    }
+ 
+    for (size_t i = 0; i<n; i++)
+    
+        for (size_t j = 0; j < m; ++j)
+        
+            mas2[i] += mas1[i][j];
+ 
+    for (size_t i = 0; i < n - 1; i++)
+    
+        for (size_t j = i + 1; j < n; j++)
+        
+            if (mas2[i]>mas2[j]) {
+            
+                swap(mas2[i], mas2[j]);
+                
+                swap(mas1[i], mas1[j]);
+                
+            }
+ 
+    cout << endl << "Resultat:\n";
+    
+    for (size_t i = 0; i < n; ++i) {
+    
+        for (size_t j = 0; j < m; ++j)
+        
+            cout << mas1[i][j] << " ";
+            
+        cout << endl;
+        
+    }
+ 
+    for (size_t i = 0; i < n; ++i)
+    
+        delete[]mas1[i];
+        
+    delete[]mas1;
+    
+    delete[]mas2;
+ 
+    system("pause");
+    
+    return 0;
+    
+}
+
+------------------------------------------------------------------------------------------------------
+
+9.
+
+#include <stdio.h>
+
+#include<iostream>
+
+using namespace std;
+
+int main()
+
+{
+    
+int i,j,j2,j1,n,m;
+
+double **a,min,p;
+
+cout<<"Vvedite razmery Massiva NxM:";
+
+cin>>n>>m;
+
+a=new double *[n];
+
+for(i=0;i<n;i++) 
+
+a[i]=new double [m];
+
+cout<<"Vvedite elementy Massiva:"<<endl;
+
+for(i=0;i<n;i++)
+
+for(j=0;j<m;j++) cin>>a[i][j];
+ 
+cout<<"Poluchenniy Massiv:"<<endl;
+
+for(j=0;j<m;j++)
+
+{
+ 
+min=a[0][j];
+
+for(i=0;i<n;i++)
+
+{
+    
+  for(j2=j;j2<m;j2++)
+  
+  {
+      
+    if (a[i][j2]<min)
+    
+    {
+        
+    min=a[i][j2];
+    
+    j1=j2;
+    
+    }
+    
+  }
+  
+}
+
+    for(i=0;i<n;i++)
+    
+    {
+        
+     p=a[i][j];
+     
+     a[i][j]=a[i][j1];
+     
+     a[i][j1]=p;
+     
+    }
+    
+}
+
+for(i=0;i<n;i++)
+
+{
+    
+for(j=0;j<m;j++)
+
+cout<<a[i][j]<<" ";
+
+cout<<endl;
+
+}
+
+    for(i=0; i<n; i++)
+    
+        delete []a[i];
+        
+        delete []a;
+        
+ return 0;
+ 
+ }
+ 
+ --------------------------------------------------------------------------------------------
+ 
+ 10.
+ 
+ #include <iostream>
+ 
+using namespace std;
+ 
+int  main()
+{ 
+    setlocale(LC_ALL,"Russian");
+    int n;
+    cout<<"Введите размер матрицы: ";
+    cin>>n;
+    cout<<"Введите элементы матрицы "<<endl;
+    int** a=new int*[n];
+    for (int i=0; i<n; i++)
+    {
+        a[i]=new int[n];
+        for(int j=0; j<n; j++)
+        {
+            cin>>a[i][j];
+        }
+    }
+    bool sim=true;
+    for (int i=0; i<n; i++)
+    {
+        for (int j=0; j<n; j++)
+        {
+            if (a[i][j]!=a[n-1-j][n-1-i])
+            {
+                sim=false;
+                break;
+            }
+        }
+        if (!sim)
+        {
+            break;
+        }
+    }
+    cout<<((sim)?"Матрица симметрична относительно побочной диагонали":
+        "Матрица не симметрична относительно побочной диагонали")<<endl;
+}
+
+------------------------------------------------------
+
+11.
+
+#include <iostream>
+
+using namespace std;
+
+int main()
+
+{
+
+    setlocale(0, "rus");
+    
+    int N;
+    
+    cout << "Введите кол-во строк: ";
+    
+    cin >> N;
+ 
+    int M;
+    
+    cout << "Введите кол-во столбцов: ";
+    
+    cin >> M;
+ 
+    int **A = new int *[N];
+    
+    for (int i = 0; i < N; i++)
+    
+        A[i] = new int[M];
+ 
+    cout << "Введите матрицу:\n ";
+    
+    for (int i = 0; i < N; i++)
+    
+    {
+    
+        for (int j = 0; j < M; j++)
+        
+        {
+        
+            cout << "A[" << i + 1 << "][" << j + 1 << "] = ";
+            
+            cin >> A[i][j];
+            
+        }
+        
+    }
+ 
+    for (int j = 0; j < N; j++)
+    
+    {
+    
+        for (int k = 0, x, y; k < M; k++)
+        
+        {
+        
+            int aMin = 0, aMax = 0;
+            
+            for (int i = 0; i < M; i++)
+            
+            {
+            
+                if (A[j][k] > A[j][i] || A[j][k] == A[j][i]) { aMax++; x = j; y = k; }
+                
+                else { aMax--; }
+                
+            }
+            
+            if (aMax == M)
+            
+            {
+            
+                for (int i = 0; i < N; i++)
+                
+                {
+                    if (A[x][y] < A[i][y] || A[x][y] == A[i][y]) { aMin++; }
+                    
+                    else { aMin--; }
+                    
+                }
+                
+                if (aMin == N) { cout << " A[" << x + 1 << "][" << y + 1 << "] = " << A[x][y] << " седловая точка\n"; }
+                
+            }
+            
+            else
+            
+            {
+            
+                int aMin = 0, aMax = 0;
+                
+                for (int i = 0; i < M; i++)
+                
+                {
+                
+                    if (A[x][y] < A[x][i] || A[x][y] == A[x][i]) { aMin++; }
+                    
+                    else { aMin--; }
+                    
+                }
+                
+                if (aMin == M)
+                
+                {
+                
+                    for (int i = 0; i < N; i++)
+                    
+                    {
+                    
+                        if (A[x][y] > A[i][y] || A[x][y] == A[i][y]) { aMax++; }
+                        
+                        else { aMax--; }
+                        
+                    }
+                    
+                    if (aMax == N) { cout << " A[" << x + 1 << "][" << y + 1 << "] = " << A[x][y] << " седловая точка\n"; }
+                    
+                }
+                
+            }
+            
+        }
+        
+    }
+    
+    system("pause");
+    
+    return 0;
+    
+}
+
+-------------------------------------------------------------------------------------------------------------
+
+12.
+
+#include <stdio.h>
+
+#include <stdlib.h>
+
+#include <iostream>
+
+#include <iomanip>
+
+using namespace std;
+
+int main()
+
+{
+    
+    int i,j,n,m,**mas,q,t,d;
+    
+    cout<<"Vvedite kol. strok v matr (n): "<<endl;
+    
+    cin>>n;
+    
+    cout<<"Vvedite kol. stolbcov v matr (m): "<<endl;
+    
+    cin>>m;
+    
+    mas=new int*[n];
+    
+    for (i=0;i<n;i++)
+    
+        mas[i]=new int [m];
+        
+    cout<<"Vvedite elementi matr: "<<endl;
+    
+    int temp, pos;
+    
+        for(i=0;i<n;i++)
+        
+        {
+            
+            temp=mas[i][0]; pos=0;
+            
+            for (j=0;j<m;j++)
+            
+            {
+                
+                if (abs(mas[i][j])>abs(temp))   { temp=mas[i][j]; pos=j; }
+                
+            }
+            
+            mas[i][pos]=mas[i][i];
+            
+            mas[i][i]=temp;
+            
+        }
+        
+            delete[]mas;
+            
+            mas=NULL;
+            
+            return 0;
+            
+}
+
+----------------------------------------------------------------------------------------------------------
+
+13.
+
+#include <iostream>
+#include <math.h>
+#include <iomanip>
+
+using namespace std;
+
+int main()
+{
+	
+	double niz[100];
+	double verx[100];
+	int n,ee,m,i,j,z,o,d,r,x,imin,jmax,imax,var;
+	
+	cout<<"vvedite n:"<<endl;
+	cin>>n;
+    m=ee=n;
+	cout<<"Vvedite variant vvoda: 1: zadannii 2: ruchnoi";
+	cin>>var;
+	
+	double **a;
+	a=new double*[n*n];
+	for(i=0; i<n*m; i++)
+		a[i]=new double[n*n];
+	z=1;
+	o=0;d=0;
+	switch(var)
+	{
+	case 1:
+	for(i=1; i<n+1; i++)
+	{cout<<endl;
+	for(j=1; j<n+1; j++)
+	{
+		
+	a[i][j]=i*1;
+	cout<<a[i][j]<<setw(3);
+	}} break;
+	case 2:
+		for(i=1; i<n+1; i++)
+			for(j=1; j<n+1; j++){
+		cout<<"a["<<i<<"]["<<j<<"]=";
+		cin>>a[i][j];}
+			for(i=1; i<n+1; i++)
+	{cout<<endl;
+	for(j=1; j<n+1; j++)
+	{
+	cout<<a[i][j]<<setw(3);
+			}}
+		break;
+	}
+	for(i=0; i<n; i++)
+	for(j=0; j<n; j++)
+	if (i=j)
+for (r=i; r<n; r++)
+{	
+	
+	verx[++d]=a[i][r+1];
+}
+
+
+
+for (i=0; i<n+1; i++)
+for (j=n-i+1; j<n; j++)
+		niz[++o]=a[i][j];
+		
+	cout<<endl;
+	cout<<endl;
+	cout<<"Elementi pod/nad diagonalami soglasno ysloviu:"<<endl;	
+	for (i=1; i<(((n*n)-n)/2)+1; i++) 
+		cout<<verx[i]<<setw(3);
+cout<<endl;
+for (i=1; i<(((n*n)-n)/2)+1; i++) 
+		cout<<niz[i]<<setw(3);
+cout<<endl;
+
+	    
+	imin=verx[1];
+	imax=niz[1];
+
+		for (i=1; i<60; i++)  
+{   if (verx[5]<imin)  { imin=verx[i];} }
+    for (i=1; i<60; i++)
+{   if (niz[i]>imax) { imax=niz[i]; }}
+cout<<endl;
+cout<<"min element: ";
+cout<<endl;
+cout<<imin;
+cout<<endl;
+cout<<"max element ";
+cout<<endl;
+cout<<imax;
+cout<<endl;
+
+}
+
+--------------------------------------------------------------------------------------------------
+
+14.
+
+#include <stdio.h>
+
+#include <stdlib.h>
+ 
+int main()
+
+{
+    
+    int n, m;
+    
+    int i,j,p;
+    
+    int even=0;
+    
+    int prom=0;
+    
+    int beetw=100;
+    
+    int minValst=0;
+    
+    int maxValst=0;
+    
+    int stop=0;
+    
+    int max;
+    
+    int min;
+    
+    printf("Vvedite razmer matrix: ");
+    
+    scanf("%d %d",&n,&m);
+    
+    int a[n][m];
+    
+    int b[100][100];
+    
+    int c[100];
+    
+    printf("\nVvedite znachenie:\n");
+    
+    for( i=0;i<n;i++)
+    
+    for( j=0;j<m;j++)
+    
+    scanf("%d",&a[i][j]);
+ 
+    printf("\nIshodnaya matrix:\n");
+    
+    for( i=0;i<n;i++)
+    
+    {
+        
+        for( j=0;j<m;j++) printf("%d\t",a[i][j]);
+        
+        printf("\n");
+        
+    }
+    
+    for (j = 0; j < m; j++)
+    
+    {
+        
+        for (i = 0; i < n; i++)
+        
+        {
+            
+            if (a[i][j]%2==0)even++;
+            
+            printf("\nEven=%d", even);
+            
+            if (even>prom)
+            
+            {
+                
+                prom=even;
+                
+                max=even;
+                
+                maxValst=j;
+                
+            }
+            
+        }
+        
+        if(even<beetw)
+        
+            {
+                
+                beetw=even;
+                
+                min=even;
+                
+                minValst=j;
+                
+            }
+            
+        even=0;
+        
+    }
+
+for (i = 0; i < n; i++)
+
+{
+    
+    p = a[i][maxValst];
+    
+    a[i][maxValst] = a[i][minValst];
+    
+    a[i][minValst] = p;
+    
+}
+
+printf("Max znachenie %d sostoit v stolbce %d\n", max, maxValst+1);
+
+printf("min znachenie  %d sostoit v stolbce %d\n", min, minValst+1);
+
+printf("Modificate matrix:\n");
+
+    for( i=0;i<n;i++)
+    
+    {
+        
+        for( j=0;j<m;j++) printf("%d\t",a[i][j]);
+        
+        printf("\n");
+        
+    }
+    
+ return 0;
+ 
+}
+
+--------------------------------------------------------------------------------------------------
+
+15.
+
+#include <bits/stdc++.h>
+ 
+using namespace std;
+ 
+void DeleteRow(int** A, int k, int N, int M)
+
+{
+
+    for (int i = k; i < N - 1; i++)
+    
+    {
+    
+        for (int j = 0; j < M; j++)
+        
+        {
+        
+            A[i][j] = A[i+1][j];
+            
+        }
+        
+    }
+    
+}
+ 
+void DeleteColumn(int** A, int k, int N, int M)
+
+{
+
+    for (int i = 0; i < N; i++)
+    
+    {
+    
+        for (int j = k; j < M - 1; j++)
+        
+        {
+        
+            A[i][j] = A[i][j+1];
+            
+        }
+        
+    }
+    
+}
+ 
+void MatrixInput(int** A, int N, int M)
+
+{
+
+    for (int i = 0; i < N; i++)
+    
+    {
+    
+        for (int j = 0; j < M; j++)
+        
+        {
+        
+            cin >> A[i][j];
+            
+        }
+        
+    }
+    
+}
+ 
+void MatrixOutput(int** A, int N, int M)
+
+{
+
+    for (int i = 0; i < N; i++)
+    
+    {
+    
+        for (int j = 0; j < M; j++)
+        
+        {
+        
+            cout << A[i][j] << " ";
+            
+        }
+        
+        cout << endl;
+        
+    }
+    
+}
+ 
+int main()
+
+{
+
+    int N, M, x, y, min;
+    
+    cout << "Enter a matrix size:" << endl;
+    
+    cout << "N = ";
+    
+    cin >> N;
+    
+    cout << "M = ";
+    
+    cin >> M;
+    
+    int** A = new int*[N];
+    
+    for (int i = 0; i < N; i++)
+    
+    {
+    
+        A[i] = new int[M];
+        
+    }
+    
+    cout << "Enter a matrix:" << endl;
+    
+    MatrixInput(A, N, M);
+    
+    min = INT_MAX;
+    
+    for (int i = 0; i < N; i++)
+    
+    {
+    
+        for (int j = 0; j < M; j++)
+        
+        {
+        
+            if (abs(A[i][j] < min))
+            
+            {
+            
+                min = abs(A[i][j]);
+                
+                x = i;
+                
+                y = j;
+                
+            }
+            
+        }
+        
+    }
+    
+    cout << "Target info:" << "\n";
+    
+    cout << "Found element: " << min << "\n";
+    
+    cout << "Row: " << x + 1 << "\n";
+    
+    cout << "Column: " << y + 1 << "\n";
+ 
+    DeleteRow(A, x, N, M);
+    
+    DeleteColumn(A, y, N, M);
+ 
+    cout << "Matrtix after the delete:" << endl;
+    
+    MatrixOutput(A, N - 1, M - 1);
+    
+    for (int i = 0; i < N; i++)
+    
+    {
+    
+        delete [] A[i];
+        
+    }
+    
+    delete [] A;
+    
+    system("pause");
+    
+    return 0;
+    
+}
