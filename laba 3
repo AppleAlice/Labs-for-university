@@ -59,3 +59,952 @@ cout<<endl;
 return 0;
 
 }
+
+--------------------------------------------------------------------------------------------------------------
+
+2.
+
+#include <iostream>
+
+#include <math.h>
+
+#include <iomanip>
+
+using namespace std;
+
+int main()
+
+{
+
+double a, b, h, x;
+
+int n, y;
+
+cout <<"Input a - double, b - double, n - int: ";
+
+cin >> a >> b >> n;
+
+cout <<"a = "<< a <<"; b = "<< b <<"; n = "<< n << endl << endl;;
+
+h = (b-a)/10;
+
+cout <<"---------------------------------------------" << endl;
+
+cout << setw(15) << "x |" << setw(15) <<"cos(x) |" << setw(15)
+
+<<"razlozenie |" << endl;
+
+cout <<"---------------------------------------------" << endl;
+
+x = a;
+
+double sum = 1.0;
+
+double per = 1.0;
+
+for(; x <= b; x+=h)
+
+{
+
+for(int i = 1; i < n; i++)
+
+{
+
+per *= pow(x, 2)/(2*i*(2*i - 1));
+
+sum += per;
+
+}
+
+y=(exp(x)-exp((-1)*x))/2;
+
+cout << setw(13) << x <<" |" << setw(13) << y <<" |" <<setw(13)
+
+<< sum << " |" << endl;
+
+sum = 1.0;
+
+per = 1.0;
+
+}
+
+cout <<"---------------------------------------------" << endl << endl;
+
+return 0;
+
+}
+
+----------------------------------------------------------------------------------------------------
+
+3.
+
+#include <iostream>
+
+#include <cstdlib>
+
+#include <iomanip>
+
+#include <math.h>
+
+double Summa(double, int);
+
+double Correct(double, int);
+ 
+void Summa(double*, int*, double*);
+
+void Summa(double&, int&, double&);
+
+using namespace std;
+
+int main()
+
+{
+
+    double s, x, a, b, h;
+
+    int k;
+
+    cout << "Vvedite a,b,h,k" << endl;
+
+    cin >> a >> b >> h >> k;
+ 
+    cout << "\n Value" << setw(20) << "Pointer" << setw(24) << "Reference \n";
+
+    x = a;
+
+    do
+
+    {
+
+        cout << setw(5) << x << setw(10) << Summa(x, k);
+
+        Summa(&x, &k, &s);
+
+        cout << setw(10) << x << setw(10) << s;
+
+        Summa(x, k, s);
+
+        cout << setw(10) << x << setw(10) << s;
+
+        cout << setw(10) << x << setw(10) << Correct(x,k) << endl;
+
+        x+=h;
+
+    } while (x <= b+h/2);
+
+    cout<<endl;
+
+    return 0;
+
+}
+
+double Summa(double x, int k)
+
+{
+
+    double s;
+
+    const double PI = 3.14159265;
+
+    int i;
+
+    s = 0;
+
+    for (i = 1; i <=k; i++)
+
+        s += cos(i*PI/4)/pow(i,2)*pow(x,i);
+
+    return s;
+
+}
+
+void Summa(double *x, int *k, double *s)
+
+{
+
+    int i;
+
+    const double PI = 3.14159265;
+
+    *s = 0;
+
+    for (i = 1; i <= *k; i++)
+
+        *s += cos(i*PI / 4) / pow(i, 2)*pow(*x, i);
+
+}
+
+void Summa(double &x, int &k, double &s)
+
+{
+
+    int i;
+
+    const double PI = 3.14159265;
+
+    s = 0;
+
+    for ( i = 1; i <=k; i++)
+
+        s += cos(i*PI / 4) / pow(i, 2)*pow(x, i);
+
+}
+ 
+double Correct(double x, int k)
+
+{
+
+    static double cs[8] = { 1, 1.0/sqrt(2),0,-1.0/sqrt(2),-1,-1.0/sqrt(2),0,1.0/sqrt(2)};
+
+    double sum = 0.0, t = 1.0;
+
+    for(int i = 1; i <= k; ++i)
+
+        sum += (t*=x)*cs[i%8]/(i*i);
+
+    return sum;
+
+}
+
+----------------------------------------------------------------------------------------------------------
+
+4.
+
+#include <iostream>
+
+#include <math.h>
+
+#include <iomanip>
+
+using namespace std;
+
+int main()
+
+{
+
+double a, b, h, x;
+
+int n;
+
+cout <<"Input a - double, b - double, n - int: ";
+
+cin >> a >> b >> n;
+
+cout <<"a = "<< a <<"; b = "<< b <<"; n = "<< n << endl << endl;;
+
+h = (b-a)/10;
+
+cout <<"---------------------------------------------" << endl;
+
+cout << setw(15) << "x |" << setw(15) <<"cos(x) |" << setw(15)
+
+<<"razlozenie |" << endl;
+
+cout <<"---------------------------------------------" << endl;
+
+x = a;
+
+double sum = 1.0;
+
+double per = 1.0;
+
+for(; x <= b; x+=h)
+
+{
+
+for(int i = 1; i < n; i++)
+
+{
+
+per *= -pow(x, 2)/(2*i*(2*i - 1));
+
+sum += per;
+
+}
+
+cout << setw(13) << x <<" |" << setw(13) << cos(x)<<" |" <<setw(13)
+
+<< sum << " |" << endl;
+
+sum = 1.0;
+
+per = 1.0;
+
+}
+
+cout <<"---------------------------------------------" << endl << endl;
+
+return 0;
+
+}
+
+-------------------------------------------------------------------------------------------------------------------
+
+5.
+
+#include <iostream>
+
+#include <iomanip>
+
+#include<math.h>
+
+using namespace std;
+
+int main ()
+
+{
+
+double a,b,h,x,y,s,p;
+
+int n,i;
+
+cout<<"Vvedite a,b,n"<<endl;
+
+cin>>a>>b>>n;
+
+h=(b-a)/10;
+
+x=a;
+
+do
+
+{
+
+p=s=1;
+
+for(i=1; i<=n; i++)
+
+{
+
+p *=pow(x,2)/i;
+
+s +=(2*i+1)* p;
+
+}
+
+y=(1+2*pow(x,2))*exp(pow(x,2));
+
+cout << setw(15) << x << setw(15) << y << setw(15) << s << endl;
+
+x+=h;
+
+}
+
+while (x <= b+h/2);
+
+cout<< endl;
+
+return 0;
+
+}
+
+--------------------------------------------------------------------------------------------------------
+
+6.
+
+#include <iostream>
+
+#include <iomanip>
+
+#include <math.h>
+
+using namespace std;
+
+int main ()
+
+{
+
+double a,b,h,d,x,y,s,p;
+
+int n,i;
+
+cout<<"Vvedite a,b,n"<<endl;
+
+cin>>a>>b>>n;
+
+h=(b-a)/10;
+
+x=a;
+
+cout<<setw(15)<<x<<setw(15)<<y<<setw(15)<<s<<setw(15)<<d<<endl;
+
+do
+
+{
+
+p=s=x;
+
+for(i=1;i<=n;i++)
+
+{
+
+p*=pow(x,2)/(2*i*(2*i+1));
+
+s+=p;
+
+}
+
+y=(exp(x)-exp((-1)*x))/2;
+
+d=fabs(y-s);
+
+cout<<setw(15)<<x<<setw(15)<<y<<setw(15)<<s<<setw(15)<<d<<endl;
+
+x+=h;
+
+}
+
+while(x<=b+h/2);
+
+cout<<endl;
+
+return 0;
+
+}
+
+---------------------------------------------------------------------------------------------------------
+
+7.
+
+#include <stdio.h>
+
+#include <math.h>
+
+using namespace std;
+
+int main(int argc, char* argv[]){
+
+double a,b,x,h,r,s,y,m;
+
+int k,n,zn;
+
+puts("Input a,b,h,n");
+
+r = scanf("%lf%lf%lf%d",&a,&b,&h,&n);
+
+for (x=a; x<=b; x+=h){
+
+zn = -1;
+
+for (k=1; k<=n; k++){
+
+zn *= -1;
+
+r = zn*pow(x,2*k+1)/(4.0*k*k-1.0);
+
+s += r;
+
+}
+
+y = (1+x*x)/2*atan(x)-x/2;
+
+m = fabs(y-s);
+
+printf("\n x=%8.2lf\tY(x)=%8.5lf\tS(x)=%8.5lf\t|Y(x)-S(x)|=%8.5lf",x,y,s,m);
+
+}
+
+return 0;
+
+}
+
+--------------------------------------------------------------------------------------------------------
+
+8.
+
+#include <iostream>
+
+#include <iomanip>
+
+#include <math.h>
+
+using namespace std;
+
+int main (int)
+
+{	double a,b,h,x,y,s,p;
+
+int n,i;
+
+cout << "vvedite a:";
+
+cin>>a;
+
+cout << "vvedite b:";
+
+cin>>b;
+
+cout << "vvedite n:";
+
+cin>>n;
+
+x=a;
+
+h=(b-a)/10.0;
+
+cout<<setw(15)<<"x"<<setw(15)<<"y(x)"<<setw(15)<<"s(x)"<<endl;
+
+do
+
+{	p=s=1;
+
+for(i=1;i<=n;i++)
+
+{
+
+p*=2*x/i;
+
+s+=p;
+
+}
+
+y=exp(2*x);
+
+cout<<setw(15)<<x<<setw(15)<<y<<setw(15)<<s<<endl;
+
+x+=h;
+
+}
+
+while(x<=b+h/2);
+
+cout<<endl;
+
+return 0; }
+
+------------------------------------------------------------------------------------------------------
+
+9.
+
+#include <iostream>
+
+#include <iomanip>
+
+#include <math.h>
+
+using namespace std;
+
+int main ()
+
+{
+
+double a,b,h,d,x,y,s,p;
+
+int n,i;
+
+cout<<"Vvedite a,b,n"<<endl;
+
+cin>>a>>b>>n;
+
+h=(b-a)/10;
+
+x=a;
+
+cout<<setw(15)<<x<<setw(15)<<y<<setw(15)<<s<<setw(15)<<d<<endl;
+
+do
+
+{
+
+p=s=x;
+
+for(i=1;i<=n;i++)
+
+{
+
+p*=(pow(i,2)+1)/(i*(i+1));
+
+s+=p;
+
+}
+
+y=(pow(x,2)/4+x/2+1)*exp(x/2);
+
+d=fabs(y-s);
+
+cout<<setw(15)<<x<<setw(15)<<y<<setw(15)<<s<<setw(15)<<d<<endl;
+
+x+=h;
+
+}
+
+while(x<=b+h/2);
+
+cout<<endl;
+
+return 0;
+
+}
+
+--------------------------------------------------------------------------------------------------------------
+
+10.
+
+#include <iostream>
+
+#include <iomanip>
+
+#include <math.h>
+
+using namespace std;
+
+int main ()
+
+{
+
+double a,b,h,d,x,y,s,p;
+
+int n,i;
+
+cout<<"Vvedite a,b,n"<<endl;
+
+cin>>a>>b>>n;
+
+h=(b-a)/10;
+
+x=a;
+
+cout<<setw(15)<<x<<setw(15)<<y<<setw(15)<<s<<setw(15)<<d<<endl;
+
+do
+
+{
+
+p=s=x;
+
+for(i=1;i<=n;i++)
+
+{
+
+p*= -pow(x,2)/(2*i+1);
+
+s+=p;
+
+}
+
+y=atan(x);
+
+d=fabs(y-s);
+
+cout<<setw(15)<<x<<setw(15)<<y<<setw(15)<<s<<setw(15)<<d<<endl;
+
+x+=h;
+
+}
+
+while(x<=b+h/2);
+
+cout<<endl;
+
+return 0;
+
+}
+
+----------------------------------------------------------------------------------------------------------------------
+
+11.
+
+#include <iostream> 
+
+#include <iomanip> 
+
+#include <math.h> 
+
+using namespace std;
+
+int main() 
+
+{ 
+
+double a,b,h,x,y,s,k; 
+
+int n,i; 
+
+cout << "Vvedite a,b,n\n"; 
+
+cin >> a >> b >> n; 
+
+x=a; 
+
+h=(b-a)/10; 
+
+while (x<=b) 
+
+{ 
+
+s=k=1; 
+
+y=(1-pow(x,2)/2)*cos(x)-x/2*sin(x); 
+
+for (i=1; i<=n; i++) 
+
+
+{ 
+
+k/=2*i; 
+
+s += pow(-1,i)*(2*pow(i,2)+1)*pow(x,2*i)*k; 
+
+} 
+
+cout << setw(15) << x << setw(15) << y << setw(15) << s << endl; 
+
+x += h; 
+
+} 
+
+return 0; 
+
+}
+
+------------------------------------------------------------------------------------------------------------
+
+12.
+
+#include <iostream>
+
+#include <stdio.h>
+
+#include <math.h>
+
+using namespace std;
+
+int main()
+
+{
+
+double a, b, x, y, h, r, s, razn;
+
+int n, k, n2;
+
+cout << "Input a,b,h,n" << endl;
+
+cin >> a >> b >> h >> n;
+
+for(x=a; x<=b; x+=h) {
+
+y = 2*((1+cos(2*x))/2-1);
+
+for (s=r=0,k=n2= 1; k<=n; k++) {
+
+n2*=2*k;
+
+r = pow(-1,k)*pow(2*x,2*k)/n2;
+
+s+=r;
+
+}
+
+razn = fabs(y-s);
+
+cout << "\n x= " << x << " y = " << y << " sum= " << s<< " |Y-S|= " << razn;
+
+}
+
+return 0;
+
+}
+
+--------------------------------------------------------------------------------------------
+
+13.
+
+#include <iostream>
+
+#include <stdio.h>
+
+#include <math.h>
+
+using namespace std;
+
+int main()
+
+{
+
+double a, b, x, y, h, r, s, razn;
+
+int n, k, n2;
+
+cout << "Input a,b,h,n" << endl;
+
+cin >> a >> b >> h >> n;
+
+for(x=a; x<=b; x+=h) {
+
+y = 2*((1+cos(2*x))/2-1);
+
+for (s=r=0,k=n2= 1; k<=n; k++) {
+
+n2*=2*k;
+
+r = pow(-1,k)*pow(2*x,2*k)/n2;
+
+s+=r;
+
+}
+
+razn = fabs(y-s);
+
+cout << "\n x= " << x << " y = " << y << " sum= " << s<< " |Y-S|= " << razn;
+
+}
+
+cout << "\nPress any key ... " << endl;
+
+return 0;
+
+}
+
+----------------------------------------------------------------------------------------------------------------------
+
+14.
+
+#include <iostream>
+
+#include <iomanip>
+
+#include <math.h>
+
+using namespace std;
+
+int main ()
+
+{
+
+double a,b,h,d,x,y,s,p;
+
+int n,i;
+
+cout<<"Vvedite a,b,n"<<endl;
+
+cin>>a>>b>>n;
+
+h=(b-a)/10;
+
+x=a;
+
+cout<<setw(15)<<x<<setw(15)<<y<<setw(15)<<s<<setw(15)<<d<<endl;
+
+do
+
+{
+
+p=s=x;
+
+for(i=1;i<=n;i++)
+
+{
+
+p*=pow(i,2)/2*i*(2*i+1)*pow(x,n);
+
+s+=p;
+
+}
+
+y=(1/4)*((x+1)/sqrt(x)*sinh(sqrt(x))-cosh(sqrt(x)));
+
+d=fabs(y-s);
+
+cout<<setw(15)<<x<<setw(15)<<y<<setw(15)<<s<<setw(15)<<d<<endl;
+
+x+=h;
+
+}
+
+while(x<=b+h/2);
+
+cout<<endl;
+
+return 0;
+
+}
+
+---------------------------------------------------------------------------------------------------------------------
+
+15.
+
+#include <iostream>
+
+#include <iomanip>
+
+#include <math.h>
+
+using namespace std;
+
+char* Rus(const char* text);
+
+int main()
+
+{
+
+double x1,x2,x, h;
+
+int N;
+
+cout << Rus("Введите начало интервала X1: ");
+
+cin >> x1;
+
+cout << Rus("Введите конец интервала X2: ");
+
+cin >> x2;
+
+cout << Rus("Введите количество суммируемых элементов ряда N: ");
+
+cin >> N;
+
+h=(x2-x1)/10.0;
+
+x=x1;
+
+cout << "|-------|--|--|" << endl;
+
+cout << "| X | S | Y |" << endl;
+
+cout << "|-------|--|--|" << endl;
+
+cout << setiosflags(ios::fixed);
+
+while (x<x2+0.001)
+
+{
+
+double a=pow(x,2.0)/2.0;
+
+double s=a;
+
+for(int n=1;n<=N;n++)
+
+{
+
+a=a*(-x*x*n*(2.0*n-1)/((n+1)*(2.0*n+1)));
+
+s+=a;
+
+}
+
+double y=x*atan(x)-log(sqrt(1+pow(x,2.0)));
+
+cout << setprecision(3) << "|" << setw(7) << x << "|" << setprecision(10)
+
+<< setw(13) << s << "|" << setw(13) << y << "|" << endl;
+
+x+=h;
+
+}
+
+cout << "|-------|--|--|" << endl;
+
+
+}
+
+char bufRus[256];
+
+char* Rus(const char* text)
+
+{
+
+
+return bufRus;
+
+}
