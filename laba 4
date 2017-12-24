@@ -1,0 +1,891 @@
+1.
+# include <iostream>
+
+# include <math.h>
+
+#include <iomanip>
+
+using namespace std;
+
+int main ()
+
+{
+
+char S [15];
+
+int i,t,j,k=0,n;
+
+char tmp;
+
+cout<<"Vvedite razmer massiva";
+
+cin >> n;
+
+for (i=0; i<n ;i++)
+
+{
+
+cout <<"Vvedite razmer S ["<<i<<"]=";
+
+cin >>S [i];
+
+}
+
+t=1;
+
+while (t==1)
+
+{
+
+t=0;
+
+for (i=0; i<n-1;i++)
+
+if (S [i+1]>='0' && S [i+1]<='9'&& S[i]>='A'&& S[i]<= 'z')
+
+{
+
+tmp=S[i];
+
+S[i]=S[i+1];
+
+S[i+1]=tmp;
+
+t=1;
+
+}
+
+}
+
+cout<<"resultat"<<endl;
+
+for (i=0; i<n ;i++)
+
+cout <<S [i];
+
+cout << endl;
+
+return 0;
+
+}
+
+--------------------------------------------------------------------------------------------------------------------
+
+2.
+
+#include <iostream>
+ 
+using namespace std;
+ 
+int main()
+{
+    const int k = 10;
+    char c[k];
+    for (int i=0; i<k; i++)
+        cin >> c[i];
+    
+    for (int i=0; i<k/2; i++)
+    {
+        char x = c[i];
+        c[i] = c[k-1-i];
+        c[k-1-i] = x;
+    }
+    
+    for (int i=0; i<k; i++)
+        cout << c[i];
+    return 0;
+}
+
+--------------------------------------------------------------------------------------------------------------
+
+3.
+
+#include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
+#include <time.h>
+
+size_t max_elements(const int *a, size_t n, int *max, size_t m)
+{
+    size_t k = 0;
+
+    for (size_t i = 0; i < n; i++)
+    {
+        size_t j = 0;
+
+        while (j < k && !(a[i] > max[j])) j++;
+
+        if (j == k )
+        {
+            if ( k < m ) max[k++] = a[i];
+        }
+        else
+        {
+            memmove(max + j + 1, max + j, 
+                    ( k < m ? k - j: k - j - 1 ) * sizeof(int));
+            max[j] = a[i];
+            if (k < m) ++k;
+        }
+    }
+
+    return k;
+}
+
+#define N1  10
+#define M   3
+
+int main()
+{
+    int a[N1];
+    int max[M];
+
+    srand((unsigned int)time(NULL));
+
+    for (size_t i = 0; i < N1; i++) a[i] = rand() % (2 * N1);
+
+    for (size_t i = 0; i < N1; i++) printf("%d ", a[i]);
+    printf("\n");
+
+    size_t k = max_elements(a, N1, max, M);
+
+    if (k != 0)
+    {
+        printf("%zu max elements are ", k);
+        for (size_t i = 0; i < k; i++) printf("%d ", max[i]);
+        printf("\n");
+    }
+}
+
+---------------------------------------------------------------------------------------------------
+
+4.
+
+#include <iostream>
+
+using namespace std;
+
+int main()
+
+{
+    
+    int *arr;
+    
+    int size; 
+    
+    cout << "n = ";
+    
+    cin >> size;
+
+    if (size <= 0) {
+        
+        cerr << "Invalid size" << endl;
+        
+        return 1;
+        
+    }
+
+    arr = new int[size];
+    
+    for (int i = 0; i < size; i++) {
+        
+        cout << "arr[" << i << "] = ";
+        
+        cin >> arr[i];
+        
+    }
+
+    int temp;
+
+    for (int i = 0; i < size - 1; i++) {
+        
+        for (int j = 0; j < size - i - 1; j++) {
+            
+            if (arr[j] > arr[j + 1]) {
+                
+                temp = arr[j];
+                
+                arr[j] = arr[j + 1];
+                
+                arr[j + 1] = temp;
+                
+            }
+            
+        }
+        
+    }
+
+    for (int i = 0; i < size; i++) {
+        
+        cout << arr[i] << " ";
+        
+    }
+    
+    cout << endl;
+
+    delete [] arr;
+    
+    return 0;
+}
+
+-------------------------------------------------------------------------------------------------
+
+5.
+
+#include <iostream>
+
+#include <iomanip>
+
+using namespace std;
+
+main()
+
+{
+
+int a[100];
+
+int i,k,j,n;
+
+cout<<"Vvedite razmer massiva "<<endl;
+
+cin>>k;
+
+cout<<"Vvedite elementi massiva"<<endl;
+
+for(i=0;i<k;i++)
+
+{
+
+cout<<"a["<<i+1<<"]= ";
+
+cin>>a[i];
+
+}
+
+for(i=0;i<k;i++)
+
+{
+
+n=0;
+
+for(j=0;j<k;j++)
+
+if(a[i]==a[j])
+
+n++;
+
+if(n==1)
+
+{
+
+cout<<a[i]<<setw(4);
+
+}
+
+}
+
+if(n==1)
+
+cout<<" V massive vctrechajytcja 1 raz";
+
+else
+
+cout<<"net takix chicel ";
+
+cout<<endl;
+
+return 0;
+
+}
+
+------------------------------------------------------------------------------------------------
+
+6.
+
+#include <iostream>
+
+#include <math.h>
+
+using namespace std;
+
+int main()
+
+{
+    
+int a[30],b[30],i,k,n;
+
+cout<<"razmer massiva k=";
+
+cin>>k;
+
+cout<<"chislo sdviga n=";
+
+cin>>n;
+
+for (i=0;i<k;i++)
+
+{
+    
+cout<<"a["<<i<<"]=";
+
+cin>>a[i];
+
+}
+
+for (i=0;i<k;i++)
+
+{
+    
+b[i]=a[(i+n)%k];
+
+cout<<"b["<<i<<"]="<<b[i]<<endl;
+
+}
+
+return 0;
+
+}
+
+-----------------------------------------------------------------------------------------
+
+7.
+
+#include <iostream>
+
+#include <time.h>
+ 
+#define   randomize() srand(time(NULL))
+
+#define   SIZE        10
+ 
+using namespace std;
+
+void Reverse(int *begin, int *end)
+
+{ 
+    
+        int temp;
+        
+        while (end>begin)
+        
+        {
+            
+                temp = *begin;
+                
+                *begin = *end;
+                
+                *end = temp;
+                
+                begin++; end--;
+                
+        }
+}
+ 
+int main()
+
+{
+    
+        int A[SIZE];
+        
+        int i;
+        
+ 
+        for (i=SIZE; --i>=0;)
+        
+                A[i]=i;
+ 
+        cout<<"A"<<endl;
+        
+        for (i=0; i<SIZE; i++)
+        
+                cout<<A[i]<<' ';
+                
+        cout<<endl;
+        
+        cout<<"number shift: "; cin>>i;
+        
+        Reverse(&A[0], &A[i-1]);
+        
+        Reverse(&A[i], &A[SIZE-1]);
+        
+        Reverse(&A[0], &A[SIZE-1]);
+ 
+        cout<<"revA"<<endl;
+        
+        for (i=0; i<SIZE; i++)
+        
+                cout<<A[i]<<' ';
+ 
+        cout<<endl; system("PAUSE");
+        
+        return 0;
+        
+}
+
+---------------------------------------------------------------------------------
+
+8.
+
+#include <stdlib.h> 
+
+#include <iostream>
+
+#include <iomanip> 
+
+using namespace std;
+
+int main() 
+
+{ 
+    
+float A[100], B[100], a, b; 
+
+int i, k=100, c=0; 
+
+cout << "Vvedite k: "; 
+
+cin >> k; 
+
+cout << "Vvedite a: "; 
+
+cin >> a ; 
+
+cout << "Vvedite b: "; 
+
+cin >> b; 
+
+for ( i = 0; i < k; i ++ ) 
+
+A[i] = (float)rand()*(b-a)/RAND_MAX + a; 
+
+for ( i = 0; i < k; i ++ ) 
+
+if ( A[i] < 0 ) 
+
+{ 
+    
+B[c] = A[i]; 
+
+c ++;} 
+
+for ( i = 0; i < k; i ++ ) 
+
+if ( A[i] >= 0 ) 
+{ 
+B[c] = A[i]; 
+
+c ++;} 
+
+cout<<setw(15)<<"Massiv A"<<setw(18)<<"Massiv A' "<<endl; 
+
+for ( i = 0; i < k; i ++ ) 
+
+cout<<setw(15)<<A[i]<<setw(15)<<B[i]<<endl; 
+
+for ( i=0; i<k; i++) 
+
+A[i]=B[i]; 
+
+}
+
+-------------------------------------------------------------------------------------------------------------
+
+9.
+
+#include<iostream> 
+
+#include<math.h> 
+ 
+ using namespace std;
+
+int main()
+ 
+{
+    
+   int i,j,n;
+   
+   char a[100],b[100],c[100];
+ 
+   cout << "Vvedite razmer: "; 
+   
+   cin >> n; 
+   
+   for (i=0; i<n; i++) 
+   
+   { 
+       
+     cout << "Vvedite a[" << i << "]= " ; 
+     
+     cin >> a[i]; 
+     
+   } 
+   
+   cout << "Massiv a:" << endl;   
+   
+   for (i=0; i<n; i++) 
+   
+   cout << a[i] << "  " ;  
+   
+   cout << endl;
+ 
+   int numberIndex = 0, symbolIndex = 0;
+   
+for(i = 0; i < n; ++i)
+
+    if(a[i] >= '0' && a[i] <= '9')
+    
+    {
+        b[numberIndex] = a[i];
+        
+        ++numberIndex;
+        
+    }
+    
+    else
+    
+    {
+        
+        c[symbolIndex] = a[i];
+        
+        ++symbolIndex;
+        
+    }
+    
+std::cout<<"Vyvod massiv b:";
+
+std::cout<<std::endl;
+
+i = 0;
+
+while(b[i])
+
+    std::cout<<b[i]<<' ';
+    
+std::cout<<std::endl;
+ 
+std::cout<<"Vyvod massiv c:";
+
+std::cout<<std::endl;
+
+i = 0;
+
+while(c[i])
+
+    std::cout<<c[i]<<' ';
+    
+std::cout<<std::endl;
+ 
+     return 0;
+     
+}
+
+---------------------------------------------------------------------------------------------------------
+
+10.
+
+#include <iostream>
+
+#include <math.h>
+
+using namespace std;
+
+int main()
+
+{
+
+int a[10],i,k,b;
+
+cout <<"Vvedite rasmer massiva:";
+
+cin >> k;
+
+for(i=0;i<k;i++)
+
+{
+
+cout <<"Vvedite a["<<i<<"]=";
+
+cin>> a[i];
+
+}
+
+cout <<"Massiv a:";
+
+cout <<endl;
+
+for(i=0;i<k;i++)
+
+cout <<a[i]<<" ";
+
+cout <<endl;
+
+k--;
+
+b=k/2;
+
+for(i=0;i<b&&a[i]==a[k];i++)
+
+{
+
+k--;
+
+}
+
+if(a[i]==a[k]) cout <<"Massiv simmetrichen"<<endl;
+
+else cout <<"Massiv ne simmetrichen"<<endl;
+
+return 0;
+
+}
+
+----------------------------------------------------------------------------------------------------
+
+11.
+
+#include <iostream>
+
+using namespace std;
+ 
+int main()
+
+{
+
+    int a[10], b[10];
+    
+    cout << "first massive:\n ";
+    
+    for(int i = 0; i < 10; i++)
+    
+        cin >> a[i];
+        
+    cout << "\nsecond massive:\n ";
+    
+    for(int i = 0; i < 10; i++)
+    
+        cin >> b[i];
+        
+    int min = a[0];
+    
+    for(int i = 0; i < 10; i++)
+    
+    {
+    
+        if(a[i] != b[i])
+        
+        {
+        
+            if(a[i] < min)
+            
+                min = a[i];
+                
+        }
+        
+    }
+    
+    cout << "Minimum = " <<min;
+    
+}
+
+-------------------------------------------------------------------------------------------------------
+
+12.
+
+#include <iostream>
+
+#include<iomanip>
+
+#include<cmath>
+
+using namespace std;
+
+int main()
+
+{
+
+	int n,s = 0;
+  
+	cout << "Vvedite razmer n:";
+  
+	cin >> n;
+  
+	int *x = new int[n];
+  
+	for(int i = 0; i < n; i++)
+  
+	{
+  
+		cout<<"Vvedite x["<<i<<"]";
+    
+		cin>>x[i];
+    
+	}
+  
+	for(int i = 0; i < n; i++)
+  
+		for(int j = i + 1; j < n; j++)
+    
+			if(x[i] > x[j])
+      
+				s++;
+        
+	cout<<"s="<<s<<endl;
+  
+	return 0;
+  
+}
+
+--------------------------------------------------------------------------------------------------------
+
+13.
+
+#include<iostream>
+
+#include<math.h>
+
+using namespace std;
+
+int main()
+
+{
+
+int a[9],b[9],i,j,k,n;
+
+cout<<"vvedite n=";
+
+cin>>n;
+
+for(i=0;i<=n;i++)
+
+{
+    
+cout<<"Vvedite a["<<i<<"]=";
+
+cin>>a[i];
+
+}
+
+for(j=0;j<=n;j++)
+
+{
+
+for (i=j+1; i<=n; i++) 
+
+if(a[j]==a[i])
+
+{for (i=j+1; i<=n; i++) 
+
+a[i-1]=a[i];
+
+n--; i--; }
+
+} 
+
+for(i=0;i<=n;i++)
+
+{
+    
+cout<<a[i]<<endl;
+
+}
+
+cout<<endl;
+
+return 0;
+
+}
+
+------------------------------------------------------------------------------------------------------
+
+14.
+
+#include <iostream>
+ 
+int main()
+{
+    
+    int *array;
+    
+    size_t size;
+ 
+    std::cout << "Введите кол-во элементов в массиве: ";
+    
+    std::cin >> size;
+ 
+    array = new int [size];
+ 
+    for (int i = 0; i < size; i++)
+    
+    {
+        
+        std::cout << "Введите " << i+1 << "й элемент: ";
+        
+        std::cin >> array[i];
+        
+    }
+ 
+    std::sort(array, array+size);
+ 
+    int count_of_differents = 1;
+ 
+    for (int i = 1; i < size; i++)
+    
+        if (array[i] != array[i-1])
+        
+            count_of_differents++;
+            
+ 
+    std::cout << "Количество различных элементов: " << count_of_differents;
+    
+}
+
+--------------------------------------------------------------------------------------------------------------------
+
+15.
+
+#include <stdio.h>
+  
+const int alph_length = 26;
+
+int main() {
+    
+    int i;
+    
+    char text[81];
+    
+    char *p;
+  
+    int letters_encountered[alph_length];
+  
+    for(i = 0;i< alph_length ; i++ ) 
+    
+         letters_encountered[i]=0;
+  
+    fgets(text,80,stdin);
+  
+    p = text;
+  
+    while(*p!=0) {
+        
+        if(*p< 'a' || *p > 'z') {
+  
+            p++;
+            
+            continue;
+            
+        };
+  
+        letters_encountered[*(p++) -'a']++;
+        
+    };
+  
+    for(i=0;i<alph_length;i++) { 
+        
+        if(letters_encountered[i]==1)
+        
+            printf("%c",'a'+(char)i);
+  
+    };
+    
+    return 0;
+  
+}
