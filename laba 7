@@ -1435,3 +1435,775 @@ if (key=='6')
 
 12.
 
+#include <iostream>
+
+#include <iomanip>
+
+#include <cstdlib>
+
+#include <cstdio>
+
+#include <cmath>
+
+#include <string>
+
+using namespace std;
+
+struct voyage{
+
+    int voyageNumber;
+    
+    string departHours, departMinutes;
+    
+    string planeType, location;
+    
+};
+
+voyage a[N];
+
+int n;
+
+int convert(int hours, int minutes) {
+
+    return hours * 60 + minutes;
+    
+}
+
+void Swap(int i, int j) {
+
+    voyage temp;
+    
+    temp = a[i];
+    
+    a[i] = a[j];
+    
+    a[j] = temp;
+    
+}
+
+int main() {
+
+    cin >> n;
+    
+    for (int i = 0; i < n; i++) {
+    
+        int voyageNumber, departHours, departMinutes;
+	
+        string planeType, location, time;
+	
+        cin >> voyageNumber >> planeType >> location >> time;
+	
+        string hours = "", minutes = "";
+	
+        bool f = false;
+	
+        for (int j = 0; j < time.size(); j++) {
+	
+            if (time[j] == ':') {
+	    
+                f = true;
+		
+                continue;
+		
+            }
+	    
+            if (f == false) {
+	    
+                hours += time[j];
+		
+            } else {
+	    
+                minutes += time[j];
+		
+            }     }
+        a[i].voyageNumber = voyageNumber;
+	
+        a[i].departHours = hours;
+	
+        a[i].departMinutes = minutes;
+	
+        a[i].planeType = planeType;
+	
+        a[i].location = location;
+	
+    }
+    
+    for (i = 0; i < n - 1; i++) {
+    
+        for (int j = n - 1;  j > i; j--) {
+	
+            int t1 = convert(atoi(a[i].departHours.c_str()), atoi(a[i].departMinutes.c_str()));
+	    
+            int t2 = convert(atoi(a[j].departHours.c_str()), atoi(a[j].departMinutes.c_str()));
+	    
+            if (t1 > t2) {
+	    
+                Swap(i, j);
+		
+            }
+	 } 
+	}
+	    
+    for (i = 0; i < n; i++) {
+    
+        cout << a[i].voyageNumber << " " << a[i].planeType << " " << a[i].location << " " << a[i].departHours << ":" << a[i].departMinutes << endl;
+	
+    }
+    
+    return 0;
+    
+}
+
+---------------------------------------------------------------------------------------------------------------------
+
+13.
+
+#include <iostream>
+
+#include <string>
+
+using namespace std;
+
+struct info 
+
+{
+    
+    int day;
+    
+    string point;
+    
+    int value_place;
+    
+};
+
+struct time
+
+{
+    
+    int hours;
+    
+    int min;
+    
+};
+
+const int sz_p=2;
+
+const int sz_d=3;
+
+int free_day[sz_d]={1,4,7};
+
+int free_place=10;
+
+int free_time_h=12; int free_time_m=30;
+
+string free_point[]={"moscow","destik"};
+
+int main()
+
+{
+    
+    info in1;
+    
+    time t1;
+    
+    char ch;
+    
+    int flag=0;
+    
+    cout<<"Mesto naznachenia: "<<endl;    cin>>in1.point;
+    
+    for (int j=0;j<sz_p;j++)
+    
+    {
+        
+        if (free_point[j]==in1.point)
+        
+        {
+            
+            flag++; 
+            
+            break;
+            
+        }
+        
+    }
+    
+    if (flag==0)
+    
+    {
+        
+        cout<<"Takogo poezda net"<<endl;
+        
+        goto exit;
+        
+    }
+    
+    cout<<"Vvedite den'"<<endl;           cin>>in1.day;
+    
+    int j;
+    
+    for (j=0; j<sz_d;j++)
+    
+    {
+        
+        if (free_day[j]==in1.day)
+        
+        {
+            
+            flag++;
+            
+            break;
+            
+        }
+        
+    }
+    
+    if (flag==1)
+    
+    {
+        
+        cout<<"Na takoi den poezda net"<<endl;
+        
+        goto exit;
+        
+    }
+    
+    cout<<"Vvedite vremia (hh:mm)"<<endl; cin>>t1.hours>>ch>>t1.min;
+    
+    if (t1.hours<=free_time_h)
+    
+    {
+        
+            cout<<"Vvedite kol-vo mest"<<endl;    cin>>in1.value_place;
+            
+            if (in1.value_place<=free_place)
+            
+              cout<<"Mogno oformit' bilet"<<endl;
+              
+    else
+    
+    {
+        
+        cout<<"Mest net"<<endl;
+        
+        goto exit;
+        
+    }
+    
+    }
+    
+    else 
+    
+    {
+        
+        cout<<"Na eto vremia net"<<endl;
+        
+        goto exit;
+        
+    }
+    
+exit:  
+
+    return 0;
+    
+}
+
+---------------------------------------------------------------------------------------------------------
+
+14.
+
+#include <iostream>
+
+#include <cstdlib>
+
+#include <iomanip>
+
+#include <ctype.h>
+
+#include <string>
+
+#include <sstream>
+
+#include <Windows.h>
+ 
+class group{
+
+private:
+
+    std::string str;
+    
+    double rus;
+    
+    double mat;
+    
+    double lit;
+    
+    double obj;
+    
+public:
+ 
+    void set_value(){
+    
+        std::cout << "Введите имя студента: ";
+	
+        std::cin >> str;
+	
+        std::cout << "Введите оценку по программированию: ";
+	
+        std::cin >> rus;
+	
+        std::cout << "Введите оценку по математике: ";
+	
+        std::cin >> mat;
+	
+        std::cout << "Введите оценку по истории: ";
+	
+        std::cin >> lit;
+	
+        std::cout << "Введите оценку по английскому языку: ";
+	
+        std::cin >> obj;
+ 
+    }
+ 
+    void get_value (){
+    
+        std::cout << "Средний бал студента: " << str << " составляет: ";
+	
+        std::cout << (rus + mat + lit + obj)/4 << std::endl;
+	
+    }
+ 
+};
+ 
+int main(){
+
+    SetConsoleCP (1251);
+    
+    SetConsoleOutputCP (1251);
+ 
+    group one[3];
+ 
+    for (int i(0); i!=3; i++){
+    
+        one[i].set_value();
+	
+        system ("cls");
+	
+    }
+ 
+    system ("cls");
+ 
+    for (int i(0); i!=3; i++){
+    
+        one[i].get_value();
+	
+    }
+ 
+    system ("pause");
+    
+    return 0;
+    
+ }
+ 
+ ------------------------------------------------------------------------------------------------------
+ 
+ 15.
+ 
+ #include <stdio.h>
+#include <conio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <windows.h>
+#include <locale.h> 
+
+FILE *fl;
+
+struct worker
+{
+char surname[40], name[40], brand[40], status[4];
+int den, mesyc, god;
+};
+
+worker work[1000];
+int nw, den, mesyc, god;
+
+int Menu();
+void AddNewData();
+void ViewFile();
+void Edit();
+void FileToStructEdit();
+void ViewResult();
+void Exit();
+
+void Enter(int);
+void EnterDetailsAmount(int);
+void EnterTeamNumber(int);
+
+void main()
+
+{
+setlocale(LC_CTYPE, "Russian");
+
+
+do
+{
+system("cls"); 
+
+switch (Menu())
+{
+case 1: AddNewData(); break;
+case 2: ViewFile(); break;
+case 3: Edit(); break;
+/*case 4: ViewResult(); break;*/
+case 5: Exit(); break;
+}
+_getch();
+}
+while(true);
+}
+
+int Menu()
+{
+int n;
+
+do
+{
+printf("Enter desired action number");
+printf("\n1 - Создание файла");
+printf("\n2 - view the file");
+printf("\n3 - edit records");
+printf("\n4 - view result");
+printf("\n5 - exit");
+
+printf("\n\nEnter an action number: ");
+scanf("%d", &n);
+fflush(stdin);
+
+system("cls");
+}
+while(n < 1 || n > 5);
+
+return n;
+}
+
+void AddNewData()
+{
+int i, den, mesyc, god;
+char continueAdd;
+char Surnme[40], name[40], brand[40], status[4];
+
+if (!(fl = fopen("list.txt", "wb")))
+{
+printf("\n\nCreating file error\n");
+return;
+
+
+
+}
+fclose(fl);
+
+if (!(fl = fopen("list.txt", "rb++")))
+{
+printf("\n\nOpening file error\n");
+return;
+}
+for (i = 0; i < 999; i++)
+{
+Enter(i);
+nw = i + 1;
+
+fwrite(&work[i], sizeof(worker), 1, fl);
+do
+{
+printf("\nContinue add records(y/n): ");
+scanf("%c", &continueAdd);
+fflush(stdin);
+}
+while(continueAdd != 'y' && continueAdd != 'Y' && continueAdd != 'n' && continueAdd != 'N');
+
+if (continueAdd == 'n' || continueAdd == 'N')
+{
+break;
+}
+
+}
+fclose(fl);
+
+printf("\nЗапись сохранена. Нажмите любую клавишу...");
+}
+
+void ViewFile()
+{
+if (!(fl = fopen("list.txt", "rb")))
+{
+printf("\n\nOpening file error\n");
+return;
+}
+
+printf ("Формат записи");
+printf("\n № Фамилия, Наименование, Марка изделия, Дата, Состояние готовности");
+printf("\n");
+
+int i = 0;
+worker workRead;
+
+while (fread(&workRead, sizeof(worker), 1, fl))
+{
+if (feof(fl))
+{
+break;
+}
+
+work[i] = workRead;
+
+printf("\n%d %s, %s, %s, %d.%d.%d, %s",
+i + 1,
+work[i].surname,
+work[i].name,
+work[i].brand,
+work[i].den,
+work[i].mesyc,
+work[i].god,
+work[i].status);
+
+
+i++;
+}
+
+fclose(fl);
+
+printf("\n\nPress any key");
+}
+void FileToStructEdit()
+{
+worker workEdit;
+int i = 0;
+
+if(!(fl=fopen("list.txt", "rb")))
+{
+printf("\n\nFile opening error\n");
+return;
+}
+
+nw = 0;
+
+while(fread(&workEdit, sizeof(worker), 1, fl))
+{
+if (feof(fl))
+{
+break;
+}
+
+work[i] = workEdit;
+
+i++;
+nw++;
+}
+}
+void Edit()
+{
+int actionNumber, i, recordNumber;
+
+do
+{
+printf("1 - удалить запись");
+printf("\n2 - редактировать запись");
+printf("\n3 - добавить новую запись");
+printf("\n4 - отмена");
+
+printf("\n\nВведите номер действия: ");
+scanf("%d", &actionNumber);
+fflush(stdin);
+
+if (actionNumber < 1 || actionNumber > 4)
+{
+printf("Пожалуйста, введите число от 1 до 4\n\n");
+}
+}
+while(actionNumber < 1 || actionNumber > 4);
+
+switch (actionNumber)
+{
+case 1:
+FileToStructEdit();
+
+system("cls");
+printf("Удаление записи");
+printf ("Формат записи");
+printf("\n № Фамилия, Наименование, Марка изделия, Дата, Состояние готовности");
+printf("\n");
+
+for (i = 0; i < nw; i++)
+{
+printf("\n%d %s, %s, %s, %d.%d.%d, %s",
+i + 1,
+work[i].surname,
+work[i].name,
+work[i].brand,
+work[i].den,
+work[i].mesyc,
+work[i].god,
+work[i].status);
+}
+
+printf("\n\n");
+
+do
+{
+printf("Введите номер удаляемой строки: ");
+scanf("%d", &recordNumber);
+fflush(stdin);
+}
+while(recordNumber < 1 || recordNumber > nw);
+
+if(!(fl=fopen("list.txt", "wb")))
+{
+printf("\n\nFile opening error\n");
+return;
+}
+
+for (i = 0; i < nw - 1; i++)
+{
+if (i > recordNumber - 2)
+{
+work[i] = work[i + 1];
+}
+
+fwrite(&work[i], sizeof(worker), 1, fl);
+}
+
+fclose(fl);
+printf("Удаление прошло успешно");
+
+break;
+
+case 2:
+FileToStructEdit();
+
+system("cls");
+printf("Редактирование записи");
+printf ("Формат записи");
+printf("\n № Фамилия, Наименование, Марка изделия, Дата, Состояние готовности");
+printf("\n");
+
+for (i = 0; i < nw; i++)
+{
+printf("\n%d %s, %s, %s, %d.%d.%d, %s",
+i + 1,
+work[i].surname,
+work[i].name,
+work[i].brand,
+work[i].den,
+work[i].mesyc,
+work[i].god,
+work[i].status);
+}
+
+printf("\n\n");
+
+do
+{
+printf("Введите номер записи для редактирования: ");
+scanf("%d", &recordNumber);
+fflush(stdin);
+}
+while(recordNumber < 1 || recordNumber > nw);
+
+if(!(fl=fopen("list.txt", "wb")))
+{
+printf("\n\nFile opening error\n");
+return;
+}
+
+for (i = 0; i < nw; i++)
+{
+if (i == recordNumber - 1)
+{
+Enter(i);
+}
+
+fwrite(&work[i], sizeof(worker), 1, fl);
+}
+
+fclose(fl);
+printf("Editing was successful");
+
+break;
+
+case 3: 
+FileToStructEdit();
+
+system("cls");
+printf("Adding new record\n");
+
+if(!(fl=fopen("list.txt", "wb")))
+{
+printf("\n\nFile opening error\n");
+return;
+}
+
+for (int i = 0; i < nw + 1; i++)
+{
+if (i == nw)
+{
+Enter(i);
+}
+
+fwrite(&work[i], sizeof(worker), 1, fl);
+}
+
+nw++;
+fclose(fl);
+printf("Adding new record was successful");
+
+break;
+
+// Выход в главное меню
+case 4: 
+return;
+
+break;
+}
+
+printf("\n\nPress any key");
+}
+
+void Enter(int i)
+{
+int den, mesyc, god;
+char continueAdd;
+char Surnme[40], name[40], brand[40], status[4];
+
+
+printf("\nВведите фамилию: ");
+scanf("%s", &Surnme);
+fflush(stdin);
+strcpy(work[i].surname, Surnme);
+
+printf("\nВведите наименование: ");
+scanf("%s", &name);
+fflush(stdin);
+strcpy(work[i].name, name);
+
+printf("\nВведите марку изделия: ");
+scanf("%s", &brand);
+fflush(stdin);
+strcpy(work[i].brand, brand);
+
+printf("\nВведите состояние готовности: ");
+scanf("%s", &status);
+strcpy(work[i].status, status);
+
+printf("\nВведите день, месяц, год: ");
+scanf("%d %d %d", &den, &mesyc, &god);
+work[i].den = den;
+work[i].mesyc = mesyc;
+work[i].god = god;
+
+
+}
+void Exit()
+{
+exit(0);
+}
