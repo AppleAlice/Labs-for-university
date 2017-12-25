@@ -1,0 +1,784 @@
+1.
+
+#include <string>
+
+using namespace std;
+
+int main()
+
+{
+
+    string s="001 01000 000  10100 00";
+    
+    int cnt=0,k;
+    
+    for(int i=0;i<s.length();i++){
+    
+        k=1;
+        
+        for(;(i<s.length())&&(s[i]!=' ');i++,k++);
+        
+        cnt+=(k==5)?1:0;
+        
+        for(;(i<s.length())&&(s[i]==' ');i++);
+        
+    }
+    
+    printf("%d",cnt);
+    
+    getchar();
+    
+    return 0;
+    
+}
+
+------------------------------------------------------------------------------------------------
+
+2.
+
+#include <stdio.h>
+
+#include <stdlib.h>
+
+#include <ctype.h>
+ 
+int main(int argc, char* argv[])
+
+{
+    char str[256] = "0000 11111 0000 111 00000 1111111 00000 11111111 000000 1111111\0";
+ 
+    int max = 256, max_pos = 0;
+    
+    for (int i = 0; str[i] != '\0'; i++)
+    
+    {
+        
+        if (isspace(str[i]) || str[i+1] == '\0')
+        
+        {
+            
+            int k = i-1;
+            
+            while (k >= 0 && !isspace(str[k])) k--;
+            
+            if (abs((k+1)-i) < max) { max = abs((k+1)-i); max_pos = k+1; }
+            
+        }
+        
+    }
+ 
+    printf("str = %s\nmax_pos = %d max_len = %d\n",str,max_pos,max);
+ 
+}
+
+--------------------------------------------------------------------------------------------------------------
+
+3.
+
+#include <iostream>
+
+using namespace std;
+
+int main(){
+
+  int i, len, maxlen;
+  
+  const char* str="010 10 001 110 01";
+  
+  for (i=1, len=maxlen=1; str[i]; i++)
+  
+   if (str[i]==str[i-1]){
+   
+     len++;
+     
+     maxlen=len>maxlen?len:maxlen;
+     
+   }
+   
+   else
+   
+     len=1;
+     
+  std::cout<<maxlen<<endl;
+  
+  return 0;
+  
+}
+
+----------------------------------------------------------------------------------------------------------------
+
+4.
+
+#include <stdio.h>
+
+#include <stdlib.h>
+ 
+#define N 20
+ 
+int main(int argc, char* argv[])
+
+{
+
+    char str[256] = "11000000 1111 11 10000111111 000001 111110 00101111 1111111\0";
+ 
+    printf("%s\n",str);
+ 
+    for (int i = 0; str[i] != '\0'; i++)
+    
+    {
+    
+        int k = i;
+        
+        while (str[i] == str[i+1]) i++;
+ 
+        if ((abs(k-i) % 2))
+        
+        {
+        
+            for (int t = k; t <= i; t++)
+            
+                printf("%c", str[t]);
+ 
+            printf("\n");
+            
+        }
+        
+    }
+ 
+    return 0;
+    
+}
+
+---------------------------------------------------------------------------------------------------
+
+5.
+
+#include <stdio.h>
+
+#include <string.h>
+
+#include <iostream>
+
+#include <math.h>
+
+#include "stdio.h"
+
+using namespace std;
+
+int main()
+
+{
+
+int p,i,k,t,n,l;
+
+char st[81];
+
+puts("Vvedite stroku");
+
+k=strlen(st);
+
+t=0; n=0; p=0;
+
+for(i=0;i<k;i+=0)
+
+{
+
+if (st[i]==' ') i++;
+
+else
+
+{
+
+t=i;
+
+while((st[t]=='1')||(st[t]=='0'))
+
+{
+
+t++; p++;
+
+}
+
+if (p%2)
+
+{
+
+for(l=i;l<t;l++)
+
+if (st[l]=='1') n++;
+
+}
+
+p=0;
+
+i=t;
+
+}
+
+}
+
+cout<<"rezultat="<<endl;
+
+cout<<n;
+
+return 0;
+
+}
+
+--------------------------------------------------------------------------------------------------
+
+6.
+
+#include <iostream>
+
+#include <string.h>
+
+#include <cstdio>
+
+using namespace std;
+
+int main ()
+
+{
+
+char stroka[100];
+
+puts("Vvedite stroku:");
+
+int dlina=strlen(stroka);
+
+char *ptr=0;
+
+int i=0;
+
+do
+
+{
+
+if(stroka[i]>='0' && stroka[i]<='9')
+
+{if(!ptr){ptr=&stroka[i];}}
+
+else
+
+if(ptr) {stroka[i]='\0';cout<<ptr<<endl;ptr=0;}
+
+i++;
+
+}while(stroka[i]!='\0');
+
+if(ptr) cout<<ptr<<endl;
+
+return 0;
+
+}
+
+---------------------------------------------------------------------------------------------------
+
+7.
+
+#include <iostream>
+
+#include <iterator>
+
+#include <algorithm>
+
+#include <cctype>
+
+using namespace std;
+ 
+int main() {
+
+    char s[] = "abcd-5.06abcd";
+    
+    int st = 0;
+    
+    char *i, *b;
+ 
+    for (i = s; *i != '\0' && st != 5; ++i)
+    
+    {
+    
+        switch (st)
+        
+        {
+        
+            case 0:
+            
+                if (*i == '+' || *i == '-')
+                
+                {
+                
+                    st = 1;
+                    
+                    b = i;
+                    
+                }
+                
+                else if (isdigit(*i))
+                
+                {
+                
+                    st = 2;
+                    
+                    b = i;
+                    
+                }
+                
+                break;
+                
+            case 1:
+            
+                if (isdigit(*i)) st = 2;
+                
+                else st = 0;
+                
+                break;
+                
+            case 2:
+            
+                if (*i == '.') st = 3;
+                
+                else if (!isdigit(*i)) st = 0;
+                
+                break;
+                
+            case 3:
+            
+                if (isdigit(*i)) st = 4;
+                
+                else st = 0;
+                
+                break;
+                
+            case 4:
+            
+                if (!isdigit(*i))
+                
+                {
+                
+                    st = 5;
+                    
+                    --i;
+                    
+                }
+                
+        }
+        
+    }
+    
+    if (st == 5 || (st == 4 && *i == '\0'))
+    
+        std::copy(b, i, std::ostream_iterator<char>(cout, ""));
+        
+}
+
+-------------------------------------------------------------------------------------------------------
+
+8.
+
+#include <iostream>
+
+#include <stdlib.h>
+
+#include <string.h>
+ 
+int main()
+
+{
+    
+    char str[] = "agdnj-445hhkn-5227.56efv";
+    
+    for(char* p = str, *pEnd = p; *p; )
+    
+    {
+        
+        strtod(p, &pEnd);
+        
+        if(p != pEnd && memchr(p, '.', pEnd - p))
+        
+        {
+            
+            std::cout.write(p, pEnd - p) << '\n';
+            
+            p = pEnd;
+            
+        }
+        
+        else ++p;
+        
+    }
+    
+    return 0;
+    
+}
+
+-------------------------------------------------------------------------
+
+9.
+
+ream>
+
+#include <string.h>
+
+#include <stdio.h>
+
+using namespace std;
+
+int main()
+
+{
+    
+	char stroka[100], t;
+	
+	int i,j,n;
+	
+	cout<<"Vvedite stroku "<<endl;
+	
+	n=strlen(stroka);
+	
+	for(i=0;i<n-1;i++)
+	
+	{
+	    
+		for(j=0;j<n-i-1;j++)
+		
+		{
+		    
+			if(stroka[j]>stroka[j+1])
+			
+			{
+			    
+				t=stroka[j];
+				
+				stroka[j]=stroka[j+1];
+				
+				stroka[j+1]=t;
+				
+			}
+			
+		}
+		
+	}
+	
+	cout<<"\nStroka po vozrastaniy: \n";
+	
+	cout<<stroka<<endl;
+	
+	return 0;
+	
+}
+
+-------------------------------------------------------------------------------------------------------------
+
+10.
+
+#include <iostream>
+
+int main()
+
+{
+
+    using namespace std;
+    
+    char ch;
+    
+    while ((ch = cin.get()) != '\n')
+    
+          if ((ch - '0') % 2 == 0) cout.put(ch);
+          
+    cout << endl;
+    
+    system("pause");
+    
+    return 0;
+    
+}
+
+-------------------------------------------------------------------------------------------
+
+11.
+
+#include <stdio.h>
+
+#include <string.h>
+
+#include <ctype.h>
+ 
+char*  get_word_asc(char* dst, char* src, int* pos) {
+
+   int  id, cnt;
+   
+   char* ptr, *tmp, *str;
+   
+   char  chs[3] = {'\0'};
+   
+prev:
+
+   tmp = str = src;
+   
+   chs[0] = *pos + 'A';
+   
+   chs[1] = *pos + 'a';
+ 
+   while(1) {
+   
+         if((str = strpbrk(str, chs)) == NULL) { 
+         
+              if( ++(*pos) < 26 )  
+              
+                   goto prev;   
+                   
+              else
+              
+                   break;
+                   
+         } 
+         
+         id = 1;
+         
+         if((str - tmp) > 0) 
+         
+               id = ! isalpha(*(str - 1));
+               
+         for(ptr = str + 1; isalpha(*ptr) && *ptr; *ptr++);
+ 
+         if(id && ! isalpha( *ptr )) {
+         
+              cnt = ptr - str;
+              
+              strncpy(dst, str, cnt);
+              
+              strcpy(str, str + cnt);
+              
+             *((dst) + cnt) = '\0';
+             
+             break;
+             
+         } else
+         
+             str = ptr;
+     
+   } 
+   
+   return (str) ? tmp : NULL;
+   
+}
+ 
+int main(void) {
+
+  char* ptr, buf[32];
+  
+  int i = 0;
+  
+  char  str[] = "Everything that "\
+  
+               "that we can image"\
+               
+               ", is real";
+ 
+  for(ptr = str; (ptr = get_word_asc(buf, ptr, &i)) != NULL;) 
+  
+      puts(buf);
+ 
+  getchar();
+  
+  return 0;
+  
+}
+
+------------------------------------------------------------------------------------------------------
+
+12.
+
+#include <iostream>
+
+using namespace std;
+
+int main(){
+
+    char str [] = "eoifj jhsa eirjf wasd fjrl";
+    
+    int k = 9; //position
+    
+    int before=  0, after = 0, space = 0;
+       
+        for(int i = 0; i <= k; i++){
+        
+            if(str[i] == ' '){
+            
+                space++;
+                
+            }
+            
+        }
+        
+        if(str[k] != ' '){
+ 
+    for(int i = k + 1; str[i]; i++){
+    
+        if(str[i] == ' ' || str[i] == '\0'){
+        
+            after = i;
+            
+                        break;
+                        
+                }
+                
+        }
+        
+        for(int j = k - 1; j >= 0; j--){
+        
+        if(str[j] == ' ' || j == 0){
+        
+            before = j;
+            
+                        break;
+                        
+                }
+                
+    }
+    
+        cout<<space + 1<<" slov ";
+        
+        for(int i = before; i < after; i++)
+        
+        cout<<str[i];
+        
+        }
+        
+        else cout<<space<<" slov";
+        
+return 0;
+
+}
+
+------------------------------------------------------------------------------------------------------------
+
+13.
+
+#include <string>
+
+#include <sstream>
+
+#include <iostream>
+
+using namespace std;
+ 
+int main()
+
+{
+    
+    string str = "oijfvd sjiocn shudf";
+    
+    stringstream ss(str);
+    
+    while(ss>>str)
+    
+        cout<<str<<endl;
+        
+    return 0;
+    
+}
+
+---------------------------------------------------------------------------------------------------------------
+
+14.
+
+#include<stdio.h>
+
+#include<string.h>
+
+int main(){
+
+	char s[100];
+  
+	char *word[100];
+  
+	char *tmp1,*max_s,*simv="., ";
+  
+	int max=0;
+  
+	printf("Введите строку: \n");
+  
+	tmp1=strtok(s,simv);
+  
+	int k=0;
+  
+	while (tmp1){
+  
+	if(tmp1){
+  
+	word[k]=tmp1;
+  
+	k++;
+  
+	}
+  
+	tmp1=strtok(NULL,simv);
+
+	}
+
+	max=strlen(word[0]);
+  
+	max-=2;
+  
+	for (int i=0;i<k;i++,max--)
+  
+		if (strlen(word[i])>max){
+    
+		max=strlen(word[i]);
+    
+		max_s=word[i];
+    
+		}
+    
+	printf ("Самое длинное слово: %s",max_s);
+  
+}
+
+------------------------------------------------------------------------------------------------------------
+
+15.
+
+#include <iostream>
+
+#include <sstream>
+
+#include <string>
+ 
+int main()
+
+{
+
+    std::string str;
+    
+    std::getline(std::cin, str);
+ 
+    std::istringstream ist(str);
+    
+    int num = 2, pos = 1;
+    
+    std::string min_word;
+    
+    ist >> min_word;
+    
+    for (std::string word; ist >> word; num++)
+    
+        if (word.length() < min_word.length())
+        
+        {
+        
+            pos = num;
+            
+            min_word = word;
+            
+        }
+ 
+    std::cout << "Number: "   << pos
+    
+              << "\nWord:   " << min_word
+              
+              << "\nLength: " << min_word.length() << std::endl;
+              
+}
