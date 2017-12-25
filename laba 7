@@ -1,0 +1,1437 @@
+1.
+
+#include <iostream>
+
+#include <string.h>
+
+using namespace std;
+
+int main()
+
+{
+
+struct spok
+
+{
+
+char fio[40];
+
+char adr[40];
+
+int skd;
+
+} mspok[100];
+
+int j,i,n,k;
+
+cout <<"Введите кол-во клиентов: ";
+
+cin >>n;
+
+cout <<endl;
+
+for (i=0;i<n;i++)
+
+{
+
+cout << "Введите ФИО клиента: ";
+
+cin >> mspok[i].fio;
+
+cout << "Введите адрес клиента: ";
+
+cin>> mspok[i].adr;
+
+cout <<"Введите скидку клиента: ";
+
+cin>> mspok[i].skd;
+
+cout <<endl;
+
+}
+
+for (i=0;i<n-1;i++)
+
+for (j=i+1;j<n;j++)
+
+{
+
+if ((strcmp(mspok[i].fio,mspok[j].fio) == 0) && (strcmp(mspok[i].adr,mspok[j].adr) == 0))
+
+{
+
+for (k=j;k<n;k++)
+
+{
+
+mspok[k] = mspok[k+1];
+
+n--;
+
+}
+
+}
+
+}
+
+for (i=0;i<n;i++)
+
+cout <<mspok[i].fio <<" " <<mspok[i].adr <<" " <<mspok[i].skd <<endl;
+
+return 0;}
+
+------------------------------------------------------------------------------------------------------------------
+
+2.
+
+#include <iostream> 
+
+#include <string.h> 
+
+using namespace std;
+
+struct  strc
+
+{   
+
+    string naim; 
+    
+    int kolv; 
+    
+    int zena;   
+    
+}  mtovar[100];  
+
+int  main () 
+
+{     
+
+    int nst, i, j; 
+    
+    cout << "Vvedite kol-vo tovarov:" << endl;  
+    
+    cin >> nst; 
+    
+   for  (i=0; i < nst; i++) 
+   
+   {   
+   
+        cout << "Vvedite naumenovanie: ";  
+        
+        cin >> mtovar[i].naim; 
+        
+        cout << "Vvedite kol-vo: ";  
+        
+        cin >> mtovar[i].kolv; 
+        
+        cout << "Vvedite zenu" << endl;
+        
+        cin >> mtovar[i].zena; 
+        
+   }
+   
+   for(i=0;i<nst;i++)
+   
+   {
+   
+       if(mtovar[i].kolv*mtovar[i].zena>=100000)
+       
+       {
+       
+           cout<<mtovar[i].naim<<endl;
+           
+       }
+       
+   }
+   
+}
+
+---------------------------------------------------------------------------------------
+
+3.
+
+#include <iostream>
+ 
+using namespace std;
+ 
+struct obshezhitie
+
+{
+
+    char fio[30];
+    
+    int gruppa;
+    
+    int dohod;
+    
+    double sb;
+    
+}
+
+mstud[100];
+
+int main()
+
+{
+
+    setlocale(LC_ALL, "Russian");
+    
+    int kol;
+    
+    int min_zp;
+ 
+    cout << "Введите количество студентов" << endl;
+    
+    cin >> kol;
+ 
+    cout << "Введите минимальную ЗП" << endl;
+    
+    cin >> min_zp;
+ 
+    for (int i = 0; i < kol; i++)
+    
+    {
+    
+        cout << "Введите ФИО" << endl;
+        
+        cin >> mstud[i].fio;
+        
+        cout << "Введите номер группы" << endl;
+        
+        cin >> mstud[i].gruppa;
+        
+        cout << "Введите средний балл" << endl;
+        
+        cin >> mstud[i].sb;
+        
+        cout << "Введите доход на чел-ка " << endl;
+        
+        cin >> mstud[i].dohod;      cout << endl;
+        
+    }
+    
+    int zp = 0;
+    
+    obshezhitie buf;
+    
+    for (int j = 0; j < kol - 1; j++) 
+    
+    {
+    
+        for (int i = 0; i < kol - 1-j; i++)
+        
+        {
+        
+            if (mstud[i].dohod > mstud[i + 1].dohod)
+            
+            {
+            
+                buf = mstud[i + 1];
+                
+                mstud[i + 1] = mstud[i];
+                
+                mstud[i] = buf;
+                
+            }
+            
+        }
+        
+    }
+    
+    int indexBordZp = 0;
+    
+    while (mstud[indexBordZp].dohod < min_zp * 2)
+    
+    {
+    
+        indexBordZp++;
+        
+    }
+ 
+    for (int j = 0; j < kol -indexBordZp- 1; j++) 
+    
+    {
+    
+        for (int i = indexBordZp; i < kol - 1 - j; i++)
+        
+        {
+        
+            if (mstud[i].sb < mstud[i + 1].sb)
+            
+            {
+            
+                buf = mstud[i + 1];
+                
+                mstud[i + 1] = mstud[i];
+                
+                mstud[i] = buf;
+                
+            }
+            
+        }
+        
+    }
+ 
+    for (int i = 0; i<kol; i++)
+    
+    {
+ 
+        cout << "fio:" << mstud[i].fio << endl;
+        
+        cout << "gruppa:" << mstud[i].gruppa << endl;
+        
+        cout << "sb:" << mstud[i].sb << endl;
+        
+        cout << "dohod:" << mstud[i].dohod << endl;      cout << endl;
+        
+    }
+    
+    cout << endl;
+ 
+    return 0;
+    
+}
+
+------------------------------------------------------------------------------------------------------------
+
+4.
+
+#include <iostream>
+
+#include <string.h>
+
+#include <iomanip>
+
+using std::cout;
+
+using std::endl;
+
+using std::cin;
+
+using std::setw;
+
+using std::fixed;
+
+using std::setprecision;
+
+const int MAX_TRIPS = 5;
+
+struct Trip
+
+{
+
+public:
+
+Trip(long int number, char *type,
+
+char *point, double otT, double prT);
+
+long int tripNumber;
+
+char *tripType;
+
+char *destractionPoint;
+
+double otprTime;
+
+double pribTime;
+
+};
+
+Trip::Trip(long int number, char *type,
+
+char *point, double otT, double prT)
+
+{
+
+tripNumber = number;
+
+tripType = type;
+
+destractionPoint = point;
+
+otprTime = otT;
+
+pribTime = prT;
+
+}
+
+int main()
+
+{
+
+char dPoint[20];
+
+double time = 0.0;
+
+int indexes[MAX_TRIPS], p;
+
+Trip *trips[MAX_TRIPS];
+
+trips[0] = new Trip(12345, "Bus", "Metro station", 15.00, 16.00);
+
+trips[1] = new Trip(12344, "Bus", "Independence Square", 15.20, 15.40);
+
+trips[2] = new Trip(12343, "Streetcar", "Independence Square", 15.15, 15.30);
+
+trips[3] = new Trip(12342, "Streetcar", "Metro station", 15.00, 15.30);
+
+trips[4] = new Trip(12341, "Bus", "Independence Square", 15.10, 15.25);
+
+cout <<"Enter a distraction point: ";
+
+cin.getline(dPoint, 20, '\n');
+
+cout <<"Enter a arrive time: ";
+
+cin >> time;
+
+cout <<endl <<"------------- Data of trips -------------------------" << endl;
+
+for(int i = p = 0; i < MAX_TRIPS; i++)
+
+{
+
+char *str = trips[i]->destractionPoint;
+
+if(strcmp(dPoint, str) == 0)
+
+{
+
+indexes[p] = i;
+
+p++;
+
+}
+
+}
+
+for(int j = 0; j < p; j++)
+
+{
+
+if(trips[indexes[j]]->pribTime < time)
+
+{
+
+cout <<setw(19)<<"Trip number: "<<trips[indexes[j]]->tripNumber<<endl
+
+<<setw(19)<<"Trip type: "<<trips[indexes[j]]->tripType<< endl
+
+<<setw(19)<<"Destraction point: "<<trips[indexes[j]]->destractionPoint
+
+<<endl <<setw(19) <<"Time of dispatch: "<<fixed<<setprecision(2)
+
+<<trips[indexes[j]]->otprTime<<endl<<setw(19)<<"Time of arrived: "
+
+<< fixed<<setprecision(2)<< trips[indexes[j]]->pribTime << endl;
+
+cout <<"-----------------------------------------------" << endl;
+
+}
+
+}
+
+for(int k = 0; k < MAX_TRIPS; k++)
+
+delete trips[k];
+
+return 0;
+
+}
+
+----------------------------------------------------------------------------------------------------------------------------
+
+5.
+
+#include <iostream>
+
+#include <string.h>
+
+using namespace std;
+
+struct ATSInfo {
+
+char data[10];
+
+int kod;
+
+char city[20];
+
+long talkTime;
+
+int tarif;
+
+char cityTelNumber[20];
+
+char abonentTelNumber[20];
+
+};
+
+int main() {
+
+struct ATSInfo information[100];
+
+int i, kolZvonkov = 0;
+
+char vubrCity[20];
+
+long totalTime = 0, time = 0;
+
+double sum = 0;
+
+int tarif = 0;
+
+cout << "Vvedite kolichestvo zvonkov: ";
+
+cin >> kolZvonkov;
+
+for (int i = 0; i < kolZvonkov; i++) {
+
+cout << "Data: ";
+
+cin >> information[i].data;
+
+cout << "Kod: ";
+
+cin >> information[i].kod;
+
+cout << "Gorod: ";
+
+cin >> information[i].city;
+
+cout << "Vremj razgovora (sec): ";
+
+cin >> information[i].talkTime;
+
+cout << "Tarif: ";
+
+cin >> information[i].tarif;
+
+cout << "Nomer telefona v gorode: ";
+
+cin >> information[i].cityTelNumber;
+
+cout << "Nomer telefona abonenta: ";
+
+cin >> information[i].abonentTelNumber;
+
+cout << "************************************" << endl;
+
+}
+
+cout << "\nVvedite gorod, dlj kotorogo bydet proizveden raschet: ";
+
+cin >> vubrCity;
+
+for (i = 0; i < kolZvonkov; i++) {
+
+if (strcmp(vubrCity, information[i].city) == 0) {
+
+time = information[i].talkTime;
+
+tarif = information[i].tarif;
+
+sum += (time / 60.0) * tarif;
+
+totalTime += time;
+
+}
+
+}
+
+cout << "\nObshaj informacij o " << vubrCity << ":\n"<< endl;
+
+cout << "Vremj razgovora: " << totalTime << " seconds" << endl;
+
+cout << "Raschet: " << sum << endl;
+
+return 0;
+
+}
+
+-----------------------------------------------------------------------------------------------------
+
+6.
+
+#include <iostream> 
+
+#include <string.h> 
+ 
+ using namespace std;
+ 
+int main () 
+
+{
+    
+struct strc{
+    
+char fio[40];
+
+int tabn;
+
+int kolch;
+
+double pocht;
+
+double zarpl;
+
+} msrab[100];
+ 
+int nrab, i;
+
+cout << "Vvedite kol-vo rabotnikov" << endl; 
+
+cin >> nrab;
+ 
+for (i=0; i<nrab; i++)
+{
+cout << "Vvedite FIO: ";
+
+cin >> msrab[i].fio;
+ 
+cout << "Vvedite tabelni nomer: ";
+
+cin >> msrab[i].tabn;
+ 
+cout << "Vvedite kol-vo otrabotannih chasov: ";
+
+cin >> msrab[i].kolch;
+ 
+if (msrab[i].kolch>144) 
+
+msrab[i].kolch += (msrab[i].kolch-144); 
+ 
+cout << "Vvedite pochasovoi tarif: ";
+
+cin >> msrab[i].pocht;
+ 
+ msrab[i].zarpl = msrab[i].kolch*msrab[i].pocht*0.88; 
+ 
+}
+ 
+ for (i=0; i<nrab; i++)
+ 
+{
+    
+cout << msrab[i].fio << " " << msrab[i].zarpl << endl; 
+
+ cout << endl;
+ 
+}
+
+return 0; 
+
+}
+
+----------------------------------------------------------------------------------------------
+
+7.
+
+#include <iostream>
+
+#include <string.h>
+
+using namespace std;
+
+int main ()
+
+{
+    
+    struct strc
+    
+    {
+        
+    int team;
+    
+    char name[20];
+    
+    int age;
+    
+    int height;
+    
+    int weight;
+    
+    } sport[100];
+    
+    int nmem,nteam,i,j;
+    
+    {
+    cout << "Vvedite kolichestvo uchastnikov\n" ;
+    
+    cin >> nmem;
+ 
+    for (i=0; i < nmem; i++)
+    
+    {
+        
+        cout << "Vvedite fio: ";
+        
+        cin >> sport[i].name;
+        
+        cout << "Vvedite komandu: ";
+        
+        cin >> sport[i].team;
+        
+        cout << "Vvedite vozrast: ";
+        
+        cin >> sport[i].age;
+        
+        cout << "Vvedite rost: ";
+        
+        cin >> sport[i].height;
+        
+        cout << "Vvedite ves";
+        
+        cin >> sport[i].weight;
+        
+        cout<<"\n\n";
+        
+    }
+    
+    }
+    
+    cout<<"vveli\n";
+    
+    int teamage[nmem],teamheight[nmem],teamweight[nmem],kol[nmem];
+    
+    int teamname[nmem];
+    
+    bool t;
+    
+    cout<<"zadali peremennie\n";
+    
+for (i=0;i<nmem; i++)
+
+{
+    
+    t=false;
+    
+    cout<<"poshel cicl\n";
+    
+    for (j=0;j<nteam;j++)
+    
+    if (teamname[j]==sport[i].team)
+    
+{
+    
+    cout<<"poshel vtoroy";
+    
+teamage[j]+=sport[i].age;
+
+teamweight[j]+=sport[i].weight;
+
+teamheight[j]+=sport[i].height;
+
+kol[j]++;
+
+t=true;
+
+break;
+
+cout<<"break\n";
+
+}
+
+else if (t==false)
+
+{
+    
+    cout<<"else\n";
+    
+    nteam++;
+    
+    teamname[nteam]=sport[i].team;
+    
+    teamage[nteam]=sport[i].age;
+    
+    teamweight[nteam]=sport[i].weight;
+    
+    teamheight[nteam]=sport[i].height;
+    
+    cout<<"/else\n";
+    
+}
+
+}
+
+cout<<"cycl ended\n";
+
+    strc stemp;
+    
+    for (i=0;i<nmem-1; i++)
+    
+        for (j=i+1;j<nmem;j++)
+        
+        if (teamage[i]<teamage[j])
+        
+    {
+        
+        stemp = sport[i];
+        
+        sport[i] = sport[j];
+        
+        sport[j] = stemp;
+        
+    }
+    
+cout<<"vivod:";
+
+for(i=0;i<nmem;i++)
+
+    cout<<" Komanda:\t"<<sport[i].team<<" aveage:"<<teamage[i]<<endl;
+    
+}
+
+----------------------------------------------------------------------------------------------------------------------
+
+8.
+
+#include <iostream>
+
+#include<string>
+
+#include<vector>
+
+#include<algorithm>
+
+using namespace std;
+
+	struct book
+	
+	{
+	    
+		int reg_nom;
+		
+		string avtor;
+		
+		string nazva;
+		
+		int god;
+		
+		string izdatel;
+		
+		int stran;
+		
+	};
+	
+class library{
+    
+	vector<book> lib;
+	
+	void add_book(book nev_book){lib.push_back(nev_book);};
+	
+public:
+
+	int in_book();
+	
+	int my_sort();
+	
+	int out_after_year_public();
+
+};
+
+bool sor(book a,book b){
+    
+	return a.avtor<b.avtor;
+	
+}
+
+int main (){  
+    
+	setlocale(LC_ALL,"Russian");
+	
+	library new_lib;
+	
+	new_lib.in_book();
+	
+	new_lib.my_sort();
+	
+	new_lib.out_after_year_public();
+	
+	system("pause");
+	
+return 0;
+
+}
+
+int library::in_book(){
+    
+	book temp;
+	
+	char Y_N='Y';
+	
+	do{
+	    
+		cout << "Vvedite registratsionnuy nomer\n";
+		
+		cin >> temp.reg_nom;
+		
+		cout << "Vvedite avtora\n";
+		
+		cin >> temp.avtor;
+		
+		cout << "vvedite nazvanie knigi\n";
+		
+		cin >> temp.nazva;
+		
+		cout << "vvedite god izdaniya\n";
+		
+		cin >> temp.god;
+		
+		cout <<"vvedite izdatelstvo\n";
+		
+		cin >> temp.izdatel;
+		
+		cout << "vveditw kolichestvo stranits\n";
+		
+		cin >> temp.stran;
+		
+		cout<<"\n----------------------------------\n";
+		
+		add_book(temp);
+		
+		cout << "Вы хотите еще добавить книгу (Y/N)?\n" ;
+		
+		cin>>Y_N;
+		
+	}while(Y_N =='Y');
+	
+	return 0;
+	
+}
+
+int library::out_after_year_public(){
+    
+	int year;
+	
+	cout<<"====================="<<endl;
+	
+	cout<<"Vvedite god"<<endl;
+	
+	cin>>year;
+	
+	for(int i=0;i<lib.size();i++){
+	    
+		if(lib[i].god>year){
+		    
+			cout<<lib[i].avtor<<endl;
+			
+			cout<<lib[i].god<<endl;
+			
+			cout<<lib[i].izdatel<<endl;
+			
+			cout<<lib[i].nazva<<endl;
+			
+			cout<<lib[i].reg_nom<<endl;
+			
+			cout<<lib[i].stran<<endl<<endl;
+			
+		}
+		
+	}
+	
+	return 0;
+	
+}
+
+int library::my_sort(){
+    
+	sort(lib.begin(),lib.end(),sor);
+	
+	return 0;
+	
+}
+
+-----------------------------------------------------------------------------------------------------
+
+9.
+
+#include <iostream>
+
+#include <iomanip>
+
+using namespace std;
+
+int main()
+
+{
+    
+struct
+
+{
+    
+char naimenovanie[100];
+
+int kolichestvo;
+
+int nomercexa;
+
+}zavod[100];
+
+int i,j,n,s,nomer;
+
+cout<<"Vvedite kolvo cexov: ";
+
+cin>>n;
+
+for(i=0;i<n;i++)
+
+{       
+    
+cout<<"Vvedite nomer ceha: ";
+
+cin>>zavod[i].nomercexa;
+
+cout<<"Kolvo naimenovaniy vipuskaemix cexom "<<zavod[i].nomercexa<<"?"<<endl;
+
+cin>>s;
+
+for(j=0;j<s;j++)
+
+{
+    
+cout<<"Vvedite naimenovanie: ";
+
+cin>>zavod[i].naimenovanie;
+
+cout<<"Vvedite kolichestvo: ";
+
+cin>>zavod[i].kolichestvo;
+
+}
+
+}
+
+cout<<"Kakoi cex vivesti?\n";
+
+cin>>nomer;
+
+cout<<setw(15)<<"naimenovanie"<<setw(15)<<"kolichestvo"<<endl;
+
+for(i=0;i<n;i++)
+
+{
+    
+if(zavod[i].nomercexa=nomer)
+
+cout<<setw(15)<<zavod[i].naimenovanie<<setw(15)<<zavod[i].kolichestvo<<endl;
+
+else cout<<"Nichego ne vipuskaetsa"<<endl;
+
+}return 0;
+
+}
+
+----------------------------------------------------------------------------------------------------------------
+
+10.
+
+#include <stdio.h>
+
+#include <cstdlib>
+
+#include <string.h>
+ 
+using namespace std;
+ 
+struct sport 
+
+{      char surname[20];
+
+       char name[15];
+       
+       char  patronym[20];
+       
+       int num;
+       
+       char post[20];
+       
+       struct D 
+       
+       {int day; 
+       
+       int month;
+       
+        int year;
+        
+        }D;
+     
+};
+ 
+void CreatingStruct(sport *s)
+
+{
+    
+     printf("Enter surname\n");
+     
+     scanf("%s", s->surname);
+     
+     printf("Enter name\n");
+     
+     scanf("%s", s->name);
+     
+     printf("Enter patronym\n");
+     
+     scanf("%s", s->patronym);
+     
+     printf("Enter the number of department\n");
+     
+     scanf("%d", &s->num);
+     
+     printf("Enter post\n");
+     
+     scanf("%s", s->post);
+     
+     printf("Enter day\n");
+     
+     scanf("%d", &s->D.day);
+     
+     printf("Enter month\n");
+     
+     scanf("%d", &s->D.month);
+     
+     printf("Enter year\n");
+     
+     scanf("%d", &s->D.year);
+     
+}
+ 
+void PrintStruct(sport *s)
+
+{
+    
+     printf("%s %s %s| %d | %s |%d.%d.%d", s->surname,s->name,s->patronym, s->num, s->post,(s->D).day,(s->D).month,(s->D).year);
+     
+}
+ 
+int main (void)
+
+{
+    
+   const int n=3;
+   
+   int i,j; 
+   
+   int temp;
+   
+   char s[128];
+   
+    sport a[n];
+    
+    for(i=0;i<n;i++)
+    
+    CreatingStruct(&a[i]);
+    
+    printf("_____Your Struct_____\n");
+    
+    for(i=0;i<n;i++)
+    
+     { PrintStruct (&a[i]);
+     
+     printf("\n");
+     
+     }
+    
+    for(i=n-1;i>=0;i--)
+    
+        for(j=0;j<i;j++)
+        
+     { if((a[j].D.day>a[j+1].D.day)||(a[j].D.month>a[j+1].D.month)||(a[j].D.year>a[j+1].D.year))
+     
+        {
+            
+        temp=a[j+1].D.day;
+        
+        a[j+1].D.day=a[j].D.day;
+        
+        a[j].D.day=temp;
+        
+        temp=a[j+1].D.month;
+        
+        a[j+1].D.month=a[j].D.month;
+        
+        a[j].D.month=temp;
+        
+        temp=a[j+1].D.year;
+        
+        a[j+1].D.year=a[j].D.year;
+        
+        a[j].D.year=temp;
+        
+        strcpy(s,a[j+1].surname);
+        
+        strcpy(a[j+1].surname,a[j].surname);
+        
+        strcpy(a[j].surname,s);
+        
+        strcpy(s,a[j+1].name);
+        
+        strcpy(a[j+1].name,a[j].name);
+        
+        strcpy(a[j].name,s);
+        
+        strcpy(s,a[j+1].patronym);
+        
+        strcpy(a[j+1].patronym,a[j].patronym);
+        
+        strcpy(a[j].patronym,s);
+        
+        temp=a[j+1].num;
+        
+        a[j+1].num=a[j].num;
+        
+        a[j].num=temp;
+        
+        strcpy(s,a[j+1].post);
+        
+        strcpy(a[j+1].post,a[j].post);
+        
+        strcpy(a[j].post,s);
+        
+        }
+        
+    }
+    
+    int p=0;
+    
+    printf("Enter number of department\n");
+    
+    scanf("%d", &p);
+    
+    printf("\n----------- Sorted Struct ------------\n");
+    
+    for(i=0;i<n;i++)
+    
+     {if(a[i].num==p)
+     
+     PrintStruct (&a[i]);
+     
+     printf("\n");
+     
+     }
+     
+     system("pause");
+     
+     return 0;
+     
+}
+
+-----------------------------------------------------------------------------------------------------------------
+
+11.
+
+#include<stdio.h>
+
+#include<iostream>
+
+#include<stdlib.h>
+
+#include<string.h>
+
+using namespace std;
+
+struct stud {
+    
+    char fio[20];
+    
+    float otc1;
+    
+    float otc2;
+    
+    float otc3;
+    
+    float sball;
+    
+   int nzap;
+
+   };
+
+struct stud st;
+
+struct stud mass[15];
+
+int n,i,sch=0;
+
+FILE* ff;
+
+double g;
+
+double z;
+
+void vvod()
+
+  {
+      
+ cout<<"nVvedite FIO : ";
+ 
+ cin>>st.fio;
+ 
+ cout<<"nVvedite Ball 1 : ";
+ 
+ cin>>st.otc1;
+ 
+ cout<<"nVvedite Ball 2 : ";
+ 
+ cin>>st.otc2;
+ 
+ cout<<"nVvedite Ball 3 : ";
+ 
+ cin>>st.otc3;
+ 
+ st.sball=(st.otc1+st.otc2+st.otc3)/3;
+ 
+ fwrite(&st,sizeof(struct stud),1,ff);
+ 
+                                  }
+
+int main()
+
+{ char key,p[6];
+
+while (key!='6')
+
+    {
+        
+    cout<<"nnnnnnnn1 - Create a new file";
+    
+    cout<<"n2 - Add record to file";
+    
+    cout<<"n3 - Prosmotr";
+    
+    cout<<"n4 - Obhi sredni ball";
+    
+    cout<<"n5 - < srednego balla";
+    
+    cout<<"n6 - Exit"<<"n";
+    
+    cin>>key;
+    
+   if (key=='1')
+   
+{sch=0;
+
+ ff=fopen("stud.dat","w");
+ 
+ vvod();
+ 
+ fclose(ff);
+ 
+}
+ 
+if (key=='2')
+
+{
+    
+if((ff=fopen("stud.dat","a"))==NULL){cout<<"nCould not open file";}
+
+ else
+ 
+   {
+       
+    vvod();
+    
+     fclose(ff);
+     
+   }
+   
+}
+
+if (key=='3')
+
+{
+    
+ ff=fopen("stud.dat","r");
+ 
+      cout<<"nFIO      Sball   n";
+      
+      cout<<"n****************************n";
+      
+      while(!feof(ff)){
+          
+       if(sizeof(st)!=fread(&st,1,sizeof(st),ff)) break;
+       
+       cout<<"n"<<st.fio<<"      "<<st.sball;
+       
+      }
+      
+ fclose(ff);
+
+}
+
+if (key=='4')
+
+{
+
+ int d;
+ 
+ float z;
+ 
+ ff=fopen("stud.dat","r");
+ 
+ g=0;
+ 
+       while (!feof(ff))
+       
+       {
+           
+       if(sizeof(st)!=fread(&st,1,sizeof(st),ff)) break;
+       
+                z++;
+                
+         g=(g+(double)st.sball);
+         
+       }
+       
+    cout<<"n****************************n";
+    
+    cout<<"Obhi sredni ball: n "; g=g/z;
+    
+    cout<<g;
+    
+    cout<<"n****************************n";
+    
+ fclose(ff);
+ 
+   }
+
+if (key=='5')
+
+{
+    
+      cout<<"nFIO      < srednego balla   n";
+      
+      cout<<"n************************************n";
+
+  ff=fopen("stud.dat","r");
+  
+  rewind(ff);
+  
+         while (!feof(ff)){
+       
+       fread(&st,sizeof(struct stud),1,ff);
+       
+       if (st.sball>g)
+       
+      {
+          
+       cout<<"n"<<st.fio<<"      "<<st.sball;
+       
+     }
+     
+     }
+     
+ fclose(ff);
+ 
+   }
+
+if (key=='6')
+
+{exit(0);
+
+}}}
+
+------------------------------------------------------------------------------------------------------------------
+
+12.
+
