@@ -23,336 +23,333 @@
 // Общее кол-во таких диаграмм равно кол-ву диаграмм вида (5,5,5,5,4).
 // Теперь рассмотрим общий случай. Пусть мы корректно расставили первые N букв (от А до буквы, которая в латинском алфавите имеет номер N), и при этом оказалось, что n1 букв находится в 1-й строке, n2 букв находится в 2-й строке,... n5 букв находится в 5-й строке (n1+n2+n3+n4+n5).
 // Тогда кол-во различных диаграмм вида (5-n5,5-n4,5-n3,5-n52,5-n1) - это и есть кол-во различных способов расставить все неиспользованные буквы на позициях, оставшихся свободными.
-// Таким образом, можно реализовать функцию Rest, которая должна вычислять
- количество вариантов расстановки оставшихся букв по заданной расстановке некоторого подмножества букв. Она пытается использовать заранее рассчитанные резуль
-таты, а если это невозможно (расставленные буквы не соответствуют диаграмме), 
-то перебирает все варианты, добавляя новые буквы на все возможные позиции 
-и рекурсивно вызывая себя для получающихся расстановок букв. При этом если
- все элементы расставлены по своим позициям (n1 + n2 + п3 + п4 + п5 >= MaxT 1) 
-значит, перебором найден еще один вариант, и Rest возвращает значение 1
-.
-// Имея функцию Rest для поиска количества вариантов расстановки букв на всех 
-оставшихся позициях, для решения задачи достаточно поступать следующим образом: для поиска номера слова по строке мы поддерживаем значение специальной величины соответствующим номеру первого по алфавиту слова, которое мы 
-можем сгенерировать по текущему множеству зафиксированных букв. Увеличи
-вая значение буквы или переходя к букве на следующей позиции, мы каждый раз
- добавляем к нашей величине количество слов, которое было пропущено, чтобы 
-перейти к новой позиции из старой
-.
-// Для решения обратной задачи - поиска номера по заданной позиции - мы опять 
-наращиваем накапливаемое значение при добавлении букв на соответствующие
- позиции.
+// Таким образом, можно реализовать функцию Rest, которая должна вычислять количество вариантов расстановки оставшихся букв по заданной расстановке некоторого подмножества букв. Она пытается использовать заранее рассчитанные результаты, а если это невозможно (расставленные буквы не соответствуют диаграмме), то перебирает все варианты, добавляя новые буквы на все возможные позиции и рекурсивно вызывая себя для получающихся расстановок букв. При этом если все элементы расставлены по своим позициям (n1 + n2 + п3 + п4 + п5 >= MaxT 1) значит, перебором найден еще один вариант, и Rest возвращает значение 1.
+// Имея функцию Rest для поиска количества вариантов расстановки букв на всех оставшихся позициях, для решения задачи достаточно поступать следующим образом: для поиска номера слова по строке мы поддерживаем значение специальной величины соответствующим номеру первого по алфавиту слова, которое мы можем сгенерировать по текущему множеству зафиксированных букв. Увеличивая значение буквы или переходя к букве на следующей позиции, мы каждый раз добавляем к нашей величине количество слов, которое было пропущено, чтобы перейти к новой позиции из старой.
+// Для решения обратной задачи - поиска номера по заданной позиции - мы опять наращиваем накапливаемое значение при добавлении букв на соответствующие позиции.
 
-{$R+}
 program io01dlt3;
+
 const
-{1}
-    {
-    Rang=3;
-Z : array[1..MaxT.1..2] of byte =
-    ((2.4),(3.5),(6.0),(5.7).(6.8),(0.0),(8.0),(0.0));
-P : array[1..MaxT.1..2] of byte =
-    ((0.0),(1.0),(2.0),(1.0).(4.2),(5.3),(4.0),(7.5));
-}
+  
+  Rang = 5;
+  MaxS = Rang * Rang;
+  MaxT = MaxS - 1;
+  Z: array[1..5, 1..5] of real =
+  (
+     ((2.6), (3.0), (4.0), (5.0), (0.0)),
+     ((7.11), (8.0), (9.0), (10.0), (0.0)),
+     ((12.16), (13.0), (14.0), (15.0), (0.0)),
+     ((17.21), (18.0), (19.0), (20.0), (0.0)),
+     ((22.0), (23.0), (24.0), (0.0), (0.0))
+  );
+  P: array[1..5, 1..5] of real =
+  (
+     ((0.0), (1.0), (2.0), (3.0), (4.0)),
+     ((1.0), (2.6), (3.7), (4.8), (9.5)),
+     ((6.0), (7.11), (8.12), (9.13), (10.14)),
+     ((11.0), (12.16), (13.17), (14.18), (15.19)),
+     ((16.0), (17.21), (18.22), (19.23), (0.0))
+  );
+  Last: string = 'ADIPY';
 
-Rang=5;
-MaxS=Rang*Rang;
-MaxT=MaxS-1;
-Z : array[1..MaxT.1..2] of byte =
-    (
-     (2.6),(3.0),(4.0),(5.0),(0.0),(7.11),(8.0),(9.0),(10.0),(0.0),(12.16),(13.0),(14.0),(15.0),(0.0),
-     (17.21),(18.0),(19.0),(20.0),(0.0),(22.0),(23.0),(24.0),(0.0)
-    );
-P : array[1..MaxT.1..2] of byte =
-    (
-     (0.0),(1.0),(2.0),(3.0),(4.0),(1.0),(2.6),(3.7),(4.8),(9.5),(6.0),(7.11),(8.12),(9.13),(10.14),
-     (11.0),(12.16),(13.17),(14.18),(15.19),(16.0),(17.21),(18.22),(19.23)
-    );
-Last : string = 'ADIPY';
-
-Type
-Tab = array [0..MaxS] of byte;
-St = array [0..MaxS] of longint;
-Tabu = array [0..MaxS] of boolean;
+type
+  Tab = array [0..MaxS] of byte;
+  St = array [0..MaxS] of longint;
+  Tabu = array [0..MaxS] of boolean;
 
 var
-	Table : Tab;
-	Able : TAb;
-	kk.N.FN : longint;
-	S.FS : string[25];
-	PT : char;
-	n1,n2,n3,n4,n5 : integer;
-	Calculates : array [0..5,0..5,0..5,0..5,0..5] of boolean;
-	State : array [0..5,0..5,0..5,0..5,0..5] of longint;
-	Absent : tabu;
+  Table: Tab;
+  Able: TAb;
+  kk, N, FN: longint;
+  S, FS: string[25];
+  PT: char;
+  n1, n2, n3, n4, n5: integer;
+  Calculated: array [0..5, 0..5, 0..5, 0..5, 0..5] of boolean;
+  State: array [0..5, 0..5, 0..5, 0..5, 0..5] of longint;
+  Absent: tabu;
 
 // Процедура OutputData выведет в качестве результата найденную строку (FS) или найденный номер (FN):
-Procedure OutputData;
+
+procedure OutputData;
 begin
-assign(output.'twofive.out'); rewrite(output);
-if PT='W'
-then writeln (FN)
-else writeln (FS);
-close(output);
+  assign(output, 'twofive.out');rewrite(output);
+  if PT = 'W'
+    then writeln(FN)
+  else writeln(FS);
+  close(output);
 end;
 
 // Для вычисления рекуррентного соотношения (вытекающего из того факта, что при удалении наибольшего элемента из диаграммы, всегда снова получается диаграмма) используется рекурсивная функция CalcState(5,5,5,5,5), которая заполняет всю таблицу State[0..5,0..5,0..5,0..5,0..5] вычисленными значениями
 
-function CalcState(n1,n2,n3,n4,n5:integer):longint;
-var j,k : byte;
-s : longint;
+function CalcState(n1, n2, n3, n4, n5: integer): longint;
+var
+  j, k: byte;
+  s: longint;
 
 begin
-if Calculated[n1,n2,n3,n4,n5]
-then begin CalcState:=State[n1,n2,n3,n4,n5]: exit;
-end;
-
-s:=0;
-if n1>=1 then inc (s.CalcState(n1-1,n2,n3,n4,n5));
-if n2>=1 then inc (s.CalcState(n1,n2-1,n3,n4,n5));
-if n3>=1 then inc (s.CalcState(n1,n2,n3-1,n4,n5));
-if n4>=1 then inc (s.CalcState(n1,n2,n3,n4-1,n5));
-if n5>=1 then inc (s.CalcState(n1,n2,n3,n4,n5-1));
-State[n1,n2,n3,n4,n5]:= s; Calculated[n1,n2,n3,n4,n5]:=true;
-CalcState:=s;
+  if Calculated[n1, n2, n3, n4, n5]
+  then begin
+    CalcState := State[n1, n2, n3, n4, n5];exit;
+  end;
+  
+  s := 0;
+  if n1 >= 1 then inc(s, CalcState(n1 - 1, n2, n3, n4, n5));
+  if n2 >= 1 then inc(s, CalcState(n1, n2 - 1, n3, n4, n5));
+  if n3 >= 1 then inc(s, CalcState(n1, n2, n3 - 1, n4, n5));
+  if n4 >= 1 then inc(s, CalcState(n1, n2, n3, n4 - 1, n5));
+  if n5 >= 1 then inc(s, CalcState(n1, n2, n3, n4, n5 - 1));
+  State[n1, n2, n3, n4, n5] := s;Calculated[n1, n2, n3, n4, n5] := true;
+  CalcState := s;
 end;
 
 // Основная задача процедуры Init - заполнить массивы State и Calculated
 
-Procedure Init;
-var i1,i2,i3,i4,i5 : integer;
+procedure Init;
+var
+  i1, i2, i3, i4, i5: integer;
 begin
-for i1:=0 to 5 do
-for i2:=0 to 5 do
-for i3:=0 to 5 do
-for i4:=0 to 5 do
-for i5:=0 to 5 do
-begin
-State[i1,i2,i3,i4,i5]:=0;
-if not ((i1>=i2) and (i2>=i3) and (i3>=i4) and (i4>=i5) )
-then Calculated[i1,i2,i3,i4,i5]:=true // указывает, что элемент массива State уже вычислен (используется во избежание повторных вычислений и для предустановки предопределённых нулевых значений массива State
-else Calculated[i1,i2,i3,i4,i5]:=false; // в случае, если элемент массива State не определён
-end;
-
-State[1,0,0,0,0]:=1; Calculated[1,0,0,0,0]:=True;
-CalcState(5,5,5,5,5);
+  for i1 := 0 to 5 do
+    for i2 := 0 to 5 do
+      for i3 := 0 to 5 do
+        for i4 := 0 to 5 do
+          for i5 := 0 to 5 do
+          begin
+            State[i1, i2, i3, i4, i5] := 0;
+            if not ((i1 >= i2) and (i2 >= i3) and (i3 >= i4) and (i4 >= i5) )
+              then Calculated[i1, i2, i3, i4, i5] := true // указывает, что элемент массива State уже вычислен (используется во избежание повторных вычислений и для предустановки предопределённых нулевых значений массива State
+            else Calculated[i1, i2, i3, i4, i5] := false; // в случае, если элемент массива State не определён
+          end;
+  
+  State[1, 0, 0, 0, 0] := 1;Calculated[1, 0, 0, 0, 0] := True;
+  CalcState(5, 5, 5, 5, 5);
 end;
 
 // Процедура InputData вводит исходные данные (номер или строку) и вызывает процедуру Init для инициализации
 
 procedure InputData;
 begin
-assign (input.'twofive.in'); reset(input);
-readln(PT);
-if PT='W'
-then readln(S)
-else readln(N);
-close(input);
-Init;
+  assign(input, 'twofive.in');reset(input);
+  readln(PT);
+  if PT = 'W'
+    then readln(S)
+  else readln(N);
+  close(input);
+  Init;
 end;
 
 // Процедура Init2 инициализирует начальными значениями массивы Table, Able и Absent
 
-Procedure Init2;
-var i : byte;
+procedure Init2;
+var
+  i: byte;
 begin
-Table[0]:=0;
-for i:=2 to MaxS do Table[i]:=MaxS;
-Table[1]:=1;
-for i:=2 to MaxT do Absent[i]:=true;
-for i:=2 to MaxT do
-if Table[i]<>MaxS then Absent[Table[i]]:=false;
-for i:=1 to MaxT do Able[i]:=0;
-Able[2]:=1; Able[Rang+1]:=1;
+  Table[0] := 0;
+  for i := 2 to MaxS do Table[i] := MaxS;
+  Table[1] := 1;
+  for i := 2 to MaxT do Absent[i] := true;
+  for i := 2 to MaxT do
+    if Table[i] <> MaxS then Absent[Table[i]] := false;
+  for i := 1 to MaxT do Able[i] := 0;
+  Able[2] := 1;Able[Rang + 1] := 1;
 end;
 
 // Функция Rest, которая должна вычислять кол-во способов расставить оставшиеся буквы по заданной расстановке расстановке некоторого подмножества букв, пытается использовать заранее рассчитанные результаты, а если это невозможно (функция Right возвращает значение false), то перебирает все варианты, добавляя новые буквы на все возможные позиции и рекурсивно вызывая себя для получающихся расстановок букв. При этом если все элементы расставлены по своим позициям, значит, перебором найден ещё один вариант, и Rest возвращает значение 1
 // Функция Rest имеет следующие параметры: Table - текущая расстановка букв; i - значение, поставленное последним; Able - какие позиции в расстановке Table сейчас свободны; j - позиция последнего значения; Absent -  какие элементы отсутствуют в текущей расстановке
 
-function Rest(Table:Tab;i:byte;Able:TAb;j:byte; Absent:tabu) : longint;
-var q,k,t : byte;
-s : longint;
+function Rest(Table: Tab; i: byte; Able: TAb; j: byte; Absent: tabu): longint;
+var
+  q, k, t: byte;
+  s: longint;
+  
+  // Функция Right вычисляет, сколько букв в каждой строке расстановки, находит букву с максимальным номером в расстановке (Max) и общее кол-во букв в расстановке (n). Если Max=n, то расстановка правильная в том смысле, что кол-во способов расставить все оставшиеся буквы можно взять в таблице State на позиции [5-n5,5-n4,5-n3,5-n2,5-n1]
+  
+  function Right(Table: Tab; var n1, n2, n3, n4, n5: integer): boolean;
+  var
+    i, Max, n, r: integer;
+    t: array[1..5] of integer;
+  begin
+    for i := 1 to Rang do t[i] := 0;
+    for i := 1 to Rang do
+      for r := 1 to Rang do
+        if Table[(i - 1) * Rang + r] <> MaxS then inc(t[i]);
+    n1 := t[1];n2 := t[2];n3 := t[3];n4 := t[4];n5 := t[5];
+    
+    
+    Max := Table[2];n := 0;
+    for i := 1 to MaxT do
+      if Table[i] <> MaxS
+      then
+      begin
+        if Table[i] > Max then Max := Table[i];
+        inc(n);
+      end;
+    Right := (Max = n);
+  end;
+  
+  // Функция Rest по полученной расстановке строит массивы Able и Absent и вызывает процедуру Put. Она проверяет, можно ли поставить букву с номером i на позицию j, и если можно, то ставит, корректируя соответствующим образом массивы Table, Able и Absent, а затем вызывает функцию Rest для вновь полученной расстановки, с накоплением суммы всех результатов Rest в переменной S.
+  
+  type
+  tarr = array [] of integer;
+  
+  procedure Put(Table:Tab;i:byte;Able:TAb;j:byte;Absent:tabu;P: tarr);
+  begin
+    if (Able[j]=1) and (i>Table[P[j,1]]) and (i>Table[P[j,2]])
+    then
+    begin
+      if (z[j, 1] <> 0) then Able[z[j, 1]] := 1;
+      if (z[j, 2] <> 0) then Able[z[j, 2]] := 1;
+      Able[j] := 0;
+      Table[j] := i;
+      Absent[Table[j]] := false;
+      inc(s,Rest(Table, i, Able, j, Absent));
+    end;
+  end;
 
-// Функция Right вычисляет, сколько букв в каждой строке расстановки, находит букву с максимальным номером в расстановке (Max) и общее кол-во букв в расстановке (n). Если Max=n, то расстановка правильная в том смысле, что кол-во способов расставить все оставшиеся буквы можно взять в таблице State на позиции [5-n5,5-n4,5-n3,5-n2,5-n1]
 
-function Right(Table:Tab;var n1,n2,n3,n4,n5:integer) : boolean;
-var i,Max,n,r: integer;
-t: array[1..5] of integer;
 begin
-for i:=1 to Rang do t[i]:=0;
-for i:=1 to Rang do
-for r:=1 to Rang do
-if Table[(i-1)*Rang+r]<>MaxS then inc{i[i]);
-n1:=t[1]; n2:=t[2]; n3:=t[3]; n4:=t[4]; n5:=t[5];
-
-{2}   {n4:=0; n5:=0}
-
-Max:=Table[2]; n:=0;
-for i:=1 to MaxT do
-if Table[i]<>MaxS
-then
-begin
-if Table[i]>Max then Max:=Table[i];
-inc(n);
-end;
-Right:=(Max=n);
-end;
-
-// Функция Rest по полученной расстановке строит массивы Able и Absent и вызывает процедуру Put. Она проверяет, можно ли поставить букву с номером i на позицию j, и если можно, то ставит, корректируя соответствующим образом массивы Table, Able и Absent, а затем вызывает функцию Rest для вновь полученной расстановки, с накоплением суммы всех результатов Rest в переменной S.
-
-procedure Put(Table:Tab;i:byte;Able:TAb;j:byte;Absent:tabu);
-begin
-if (Able[j]=1) and (i>Table[P[j,1]]) and (i>Table[P[j,2]])
-then
-begin
-if (z[j,1]<>0) then Able[z[j,1]]:=1;
-if (z[j,2]<>0) then Able[z[j,2]]:=1;
-Able[j]:=0;
-Table[j]:=i;
-Absent[Table[j]]:=false;
-inc(s.Rest(Table,i,Able,j,Absent));
-end;
-end;
-
-
-begin
-if Right(Table,n1,n2,n3,n4,n5)
-then begin
-
-{3}     {Rest:=State[3-n3,3-n2,3-n1,0,0];}
-        Rest:=State[5-n5,5-n4,5-n3,5-n2,5-n1];
-	exit;
-end;
-if n1+n2+n3+n4+n5>=MaxT-1
-then begin
-Rest:=1;
-exit;
-end;
-
-for i:=2 to MaxT do Able[i]:=0;
-for i:=1 to MaxT do
-begin
-if Table[i]=MaxS then continue;
-if (z[i,1]<>0) then Able[z[i,1]]:=1;
-if (z[i,2]<>0) then Able[z[i,2]]:=1;
-Able[i]:=0;
-Absent[Table[i]]:=false;
-end;
-
-s:=0;
-for k:=2 to MaxT do
-if Absent[k]
-then begin i:=k;
-break;
-end;
-for t:=2 to MaxT do Put(Table,i,Able,t,Absent);
-
-Rest:=s;
+  if Right(Table, n1, n2, n3, n4, n5)
+  then begin
+    
+    Rest := State[5 - n5, 5 - n4, 5 - n3, 5 - n2, 5 - n1];
+    exit;
+  end;
+  if n1 + n2 + n3 + n4 + n5 >= MaxT - 1
+  then begin
+    Rest := 1;
+    exit;
+  end;
+  
+  for i := 2 to MaxT do Able[i] := 0;
+  for i := 1 to MaxT do
+  begin
+    if Table[i] = MaxS then continue;
+    if (z[i, 1] <> 0) then Able[z[i, 1]] := 1;
+    if (z[i, 2] <> 0) then Able[z[i, 2]] := 1;
+    Able[i] := 0;
+    Absent[Table[i]] := false;
+  end;
+  
+  s := 0;
+  for k := 2 to MaxT do
+    if Absent[k]
+    then begin
+      i := k;
+      break;
+    end;
+  for t := 2 to MaxT do Put(Table, i, Able, t, Absent);
+  
+  Rest := s;
 end;
 
 // Теперь рассмотрим функцию FindNumber - нахождение числа по заданной строке
 
 procedure FindNumber;
-
-// Функция MinAble принимает в качестве параметра номер позиции i, на которую в массиве Table нужно поставить текущую букву. Функция MinAble перебирает все буквы от 2-ой - то есть B - до буквы MaxT - то есть Х. Если позиция i свободна и число j больше соседей слева и сверху (если таковые имеются), то j - то, что нужно.
-
-function MinAble(i:integer):integer;
-var j,i1,i2: integer;
-mas : array [0..MaxS] of byte;
-Good,Good1,Good2: boolean;
-begin
-for j:=1 to maxT do mas[j]:=0;
-for j:=1 to MaxT do Mas[Table[j]]:=1;
-
-for j:=2 to MaxT do
-begin
-Good1:=(Mas[j]=0);
-Good2:=(i<=Rang) and (j>Table[i-Rang]) or (i>Rang) and
-	(((i mod Rang)=1) and (j>Table[i-Rang]) or
-	((i mod Rang)<>1) and (j>Table[i-1]) and (j>Table[i-Rang]));
-Good:=Good1 and Good2;
-if Good then
-begin
-MinAble:=j;
-exit;
-end;
-end;
-end;
+  
+  // Функция MinAble принимает в качестве параметра номер позиции i, на которую в массиве Table нужно поставить текущую букву. Функция MinAble перебирает все буквы от 2-ой - то есть B - до буквы MaxT - то есть Х. Если позиция i свободна и число j больше соседей слева и сверху (если таковые имеются), то j - то, что нужно.
+  
+  function MinAble(i: integer): integer;
+  var
+    j, i1, i2: integer;
+    mas: array [0..MaxS] of byte;
+    Good, Good1, Good2: boolean;
+  begin
+    for j := 1 to maxT do mas[j] := 0;
+    for j := 1 to MaxT do Mas[Table[j]] := 1;
+    
+    for j := 2 to MaxT do
+    begin
+      Good1 := (Mas[j] = 0);
+      Good2 := (i <= Rang) and (j > Table[i - Rang]) or (i > Rang) and
+            	(((i mod Rang) = 1) and (j > Table[i - Rang]) or
+            	((i mod Rang) <> 1) and (j > Table[i - 1]) and (j > Table[i - Rang]));
+      Good := Good1 and Good2;
+      if Good then
+      begin
+        MinAble := j;
+        exit;
+      end;
+    end;
+  end;
 
 // В переменной FN накапливается ответ
 
-var i,j,k,p,n1,n2,n3,q: byte;
+var
+  i, j, k, p, n1, n2, n3, q: byte;
 begin
-FN:=1;
-Init2: j:=2;
-for i:=2 to MaxS-2 do
-begin
-Table[i]:=j;
-while Table[i]< (Ord(s[i])-Ord('A')+1) do
-begin
-inc(FN.Rest(Table,i,Able,j,Absent));
-inc(Table[i]);
-repeat
-q:=1;
-while (q<=i-1) and (Table[q]<>Table[i])
-do Inc(q);
-if q<=i-1 then inc(Table[i]);
-until q=i;
-end;
-j:=MinAble(i+1);
-end;
+  FN := 1;
+  Init2: j := 2;
+  for i := 2 to MaxS - 2 do
+  begin
+    Table[i] := j;
+    while Table[i] < (Ord(s[i]) - Ord('A') + 1) do
+    begin
+      inc(FN.Rest(Table, i, Able, j, Absent));
+      inc(Table[i]);
+      repeat
+        q := 1;
+        while (q <= i - 1) and (Table[q] <> Table[i])
+          do Inc(q);
+        if q <= i - 1 then inc(Table[i]);
+      until q = i;
+    end;
+    j := MinAble(i + 1);
+  end;
 end;
 
 // Для установки возможной буквы в заданную позицию i начиная с заданного значения x используется процедура SetTable(i,x)
 
-procedure SetTable(i,x:integer);
-var Correct: boolean;
-q: integer;
+procedure SetTable(i, x: integer);
+var
+  Correct: boolean;
+  q: integer;
 begin
-repeat
-Correct:=(i<=Rang) and (x>Table[i-Rang]) or (i>Rang) and
-(((i mod Rang)=1) and (x>Table[i-Rang]) or ((i mod Rang)<>1) and
-(x>Table[i-1]) and (x>Table[i-Rang]));
-q:=1;
-while (q<=i-1) and (Table[q]<>x)
-do Inc(q);
-if (q<=i-1) or (not Correct)
-then inc(x)
-until (q=i) and Correct;
-Table[i]:=x;
+  repeat
+    Correct := (i <= Rang) and (x > Table[i - Rang]) or (i > Rang) and
+        (((i mod Rang) = 1) and (x > Table[i - Rang]) or ((i mod Rang) <> 1) and
+        (x > Table[i - 1]) and (x > Table[i - Rang]));
+    q := 1;
+    while (q <= i - 1) and (Table[q] <> x)
+      do Inc(q);
+    if (q <= i - 1) or (not Correct)
+      then inc(x)
+  until (q = i) and Correct;
+  Table[i] := x;
 end;
 
 // Расссмотрим функцию FindString - она находит строку по заданному номеру. Вычислив с переменной Add кол-во различных перестановок, начинающихся с букв AB, процедура FindString раюотает до тех пор, пока не построит всю строку до позиции i=MaxT
 
 procedure FindString;
-var i,j,q: byte;
-add: longint;
+var
+  i, j, q: byte;
+  add: longint;
 begin
-Init2: FN:=0;
-Table[2]:=2; Able[2]:=0; Able[3]:=1; i:=2; j:=2;
-Add:=Rest(Table,i,Able,j,Absent);
-repeat
-while (FN+Add>=N) and (i<MaxT) do
-begin
-inc(i): SetTable(i,2); j:=Table[i];
-Add:=Rest(Table,i,Able,j,Absent);
-end;
-while (FN+add<N) do
-begin
-inc(FN,Add)
-SetTable(i,Table[i]+1); j:=Table[i];
-Add:=Rest(Table,i,Able,j,Absent);
-end;
-until i=MaxT;
-FS:='A';
-for i:=2 to MaxT do FS:=FS+char(Table[i]+ord('A')-1);
-FS:=FS+Last[Rang];
+  Init2: FN := 0;
+  Table[2] := 2;Able[2] := 0;Able[3] := 1;i := 2;j := 2;
+  Add := Rest(Table, i, Able, j, Absent);
+  repeat
+    while (FN + Add >= N) and (i < MaxT) do
+    begin
+      inc(i);SetTable(i, 2);j := Table[i];
+      Add := Rest(Table, i, Able, j, Absent);
+    end;
+    while (FN + add < N) do
+    begin
+      inc(FN, Add);
+      SetTable(i, Table[i] + 1);j := Table[i];
+      Add := Rest(Table, i, Able, j, Absent);
+    end;
+  until i = MaxT;
+  FS := 'A';
+  for i := 2 to MaxT do FS := FS + char(Table[i] + ord('A') - 1);
+  FS := FS + Last[Rang];
 end;
 
 // Главная программа, приводящая в действие основную цель
+
 begin
-InputData;
-if PT='W'
-then FindNumber
-else FinsString;
-OutputData;
+  InputData;
+  if PT = 'W'
+    then FindNumber
+  else FinsString;
+  OutputData;
 end.
